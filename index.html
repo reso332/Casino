@@ -426,7 +426,6 @@
     <div class="notification" id="notification"></div>
     
     <div class="container">
-        <!-- الهيدر -->
         <div class="header">
             <div class="logo" id="app-logo">
                 <i class="fas fa-dice"></i>
@@ -442,7 +441,6 @@
             </div>
         </div>
 
-        <!-- قسم تسجيل الدخول -->
         <div class="section" id="login-section">
             <h2 class="section-title">
                 <i class="fas fa-sign-in-alt"></i>
@@ -473,7 +471,6 @@
             </div>
         </div>
 
-        <!-- القسم الرئيسي بعد التسجيل -->
         <div class="section main-section" id="main-section">
             <div class="header-nav">
                 <div class="user-display">
@@ -521,7 +518,6 @@
             </button>
         </div>
 
-        <!-- قسم المتجر -->
         <div class="section main-section" id="store-section">
             <div class="header-nav">
                 <div class="user-display">
@@ -548,11 +544,9 @@
             </div>
             
             <div class="products-grid" id="products-container">
-                <!-- المنتجات ستضاف عبر JavaScript -->
-            </div>
+                </div>
         </div>
 
-        <!-- لعبة النرد -->
         <div class="section dice-game main-section" id="dice-game">
             <div class="header-nav">
                 <div class="user-display">
@@ -603,7 +597,6 @@
             </button>
         </div>
 
-        <!-- لعبة الطائرة -->
         <div class="section airplane-game main-section" id="airplane-game">
             <div class="header-nav">
                 <div class="user-display">
@@ -653,14 +646,13 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
     <script type="module">
-        // Import Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-        import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+        // Import Firebase باستخدام إصدار مستقر (v10.12.2)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
         
-        // Firebase configuration - نفس الإعدادات التي أعطيتني إياها
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAKGrxv_GT3T3krYeYY5C-o7VmvLkG-gw0",
             authDomain: "cashapp-405b7.firebaseapp.com",
@@ -681,7 +673,7 @@
             app = initializeApp(firebaseConfig);
             auth = getAuth(app);
             database = getDatabase(app);
-            console.log("✅ Firebase connected successfully!");
+            console.log("✅ Firebase connected successfully using version 10.12.2!");
         } catch (error) {
             console.error("❌ Firebase connection error:", error);
             document.getElementById('error-message').style.display = 'block';

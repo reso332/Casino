@@ -126,7 +126,6 @@
         
         .form-group {
             margin-bottom: 15px;
-            position: relative;
         }
         
         label {
@@ -138,7 +137,7 @@
         
         input {
             width: 100%;
-            padding: 12px 40px 12px 12px;
+            padding: 12px;
             border: 2px solid var(--border-color);
             border-radius: 8px;
             background-color: white;
@@ -200,7 +199,6 @@
             margin: 12px 0;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
-            animation: fadeIn 0.5s ease;
         }
         
         .user-info {
@@ -237,7 +235,6 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            animation: fadeInUp 0.5s ease;
         }
         
         .game:hover {
@@ -283,11 +280,11 @@
         }
         
         @keyframes roll {
-            0% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(90deg) scale(1.1); }
-            50% { transform: rotate(180deg) scale(1); }
-            75% { transform: rotate(270deg) scale(1.1); }
-            100% { transform: rotate(360deg) scale(1); }
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(90deg); }
+            50% { transform: rotate(180deg); }
+            75% { transform: rotate(270deg); }
+            100% { transform: rotate(360deg); }
         }
         
         .airplane-container {
@@ -322,7 +319,6 @@
             transform: translateX(100%);
             transition: all 0.5s ease;
             max-width: 350px;
-            animation: slideIn 0.5s ease forwards;
         }
         
         .notification.show {
@@ -412,7 +408,6 @@
             border: 1px solid var(--border-color);
             flex-wrap: wrap;
             gap: 10px;
-            animation: fadeInUp 0.5s ease;
         }
         
         .product-info {
@@ -441,7 +436,6 @@
             font-size: 13px;
             z-index: 1000;
             display: none;
-            animation: fadeIn 0.5s ease;
         }
         
         .connection-status.connected {
@@ -452,64 +446,6 @@
         .connection-status.disconnected {
             background-color: var(--danger-color);
             display: block;
-        }
-        
-        .password-toggle {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #666;
-            cursor: pointer;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .password-toggle:hover {
-            color: var(--accent-color);
-            transform: translateY(-50%) scale(1.1);
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
         }
         
         /* تحسينات للشاشات الصغيرة */
@@ -665,10 +601,6 @@
                 font-size: 16px;
                 min-height: 44px;
             }
-            
-            .password-toggle {
-                min-height: 44px;
-            }
         }
     </style>
 </head>
@@ -708,9 +640,6 @@
             <div class="form-group">
                 <label for="login-password" id="password-label">كلمة المرور:</label>
                 <input type="password" id="login-password" placeholder="أدخل كلمة المرور">
-                <button type="button" class="password-toggle" id="toggle-password">
-                    <i class="fas fa-eye"></i>
-                </button>
             </div>
             
             <button id="login-btn">
@@ -936,7 +865,6 @@
         let currentUserId = null;
         let userListener = null;
         
-        // محاولة الاتصال بـ Firebase
         try {
             app = initializeApp(firebaseConfig);
             database = getDatabase(app);
@@ -949,11 +877,9 @@
             document.getElementById('error-message').style.display = 'block';
         }
         
-        // البيانات
         let currentLanguage = 'ar';
         let isDarkMode = false;
         
-        // الترجمات
         const translations = {
             ar: {
                 "app_title": "Blosfet Casino",
@@ -1055,7 +981,6 @@
             }
         };
         
-        // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
             loadSettings();
@@ -1063,12 +988,10 @@
             updateTranslations();
         });
         
-        // إعداد مستمعي الأحداث
         function setupEventListeners() {
             document.getElementById('theme-toggle').addEventListener('click', toggleDarkMode);
             document.getElementById('language-toggle').addEventListener('click', toggleLanguage);
             document.getElementById('login-btn').addEventListener('click', loginUser);
-            document.getElementById('toggle-password').addEventListener('click', togglePasswordVisibility);
             document.getElementById('logout-btn').addEventListener('click', logoutUser);
             document.getElementById('dice-game-btn').addEventListener('click', () => showSection('dice-game'));
             document.getElementById('airplane-game-btn').addEventListener('click', () => showSection('airplane-game'));
@@ -1084,23 +1007,6 @@
             });
         }
         
-        // إظهار/إخفاء كلمة المرور
-        function togglePasswordVisibility() {
-            const passwordInput = document.getElementById('login-password');
-            const toggleBtn = document.getElementById('toggle-password');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
-                toggleBtn.style.animation = 'fadeIn 0.3s ease';
-            } else {
-                passwordInput.type = 'password';
-                toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
-                toggleBtn.style.animation = 'fadeIn 0.3s ease';
-            }
-        }
-        
-        // عرض حالة الاتصال
         function showConnectionStatus(status, message) {
             const statusElement = document.getElementById('connection-status');
             statusElement.textContent = message;
@@ -1111,7 +1017,6 @@
             }, 3000);
         }
         
-        // اختبار اتصال Firebase
         function testFirebaseConnection() {
             if (!isFirebaseConnected || !database) {
                 showNotification(getTranslation('no_connection'), 'error');
@@ -1135,7 +1040,6 @@
             }
         }
         
-        // تحميل الإعدادات
         function loadSettings() {
             const savedTheme = localStorage.getItem('theme');
             const savedLanguage = localStorage.getItem('language');
@@ -1152,7 +1056,6 @@
             showLoginSection();
         }
         
-        // تبديل الوضع الداكن
         function toggleDarkMode() {
             if (isDarkMode) {
                 disableDarkMode();
@@ -1161,7 +1064,6 @@
             }
         }
         
-        // تفعيل الوضع الداكن
         function enableDarkMode() {
             document.body.classList.add('dark-mode');
             document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-sun"></i>';
@@ -1169,7 +1071,6 @@
             localStorage.setItem('theme', 'dark');
         }
         
-        // تعطيل الوضع الداكن
         function disableDarkMode() {
             document.body.classList.remove('dark-mode');
             document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-moon"></i>';
@@ -1177,7 +1078,6 @@
             localStorage.setItem('theme', 'light');
         }
         
-        // تبديل اللغة
         function toggleLanguage() {
             currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
             document.documentElement.setAttribute('dir', currentLanguage === 'ar' ? 'rtl' : 'ltr');
@@ -1188,18 +1088,15 @@
             localStorage.setItem('language', currentLanguage);
         }
         
-        // تحديث زر اللغة
         function updateLanguageButton() {
             document.getElementById('lang-text').textContent = 
                 currentLanguage === 'ar' ? 'EN' : 'AR';
         }
         
-        // الحصول على ترجمة
         function getTranslation(key) {
             return translations[currentLanguage][key] || key;
         }
         
-        // تحديث جميع الترجمات
         function updateTranslations() {
             const elements = document.querySelectorAll('[id]');
             elements.forEach(element => {
@@ -1223,18 +1120,17 @@
                 currentLanguage === 'ar' ? 'أدخل مبلغ الرهان' : 'Enter bet amount';
         }
         
-        // عرض إشعار
         function showNotification(message, type) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
-            notification.className = `notification ${type} show`;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
             
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
         }
         
-        // تسجيل الدخول - مع كلمة المرور
         async function loginUser() {
             if (!isFirebaseConnected) {
                 showNotification(getTranslation('no_connection'), 'error');
@@ -1284,7 +1180,6 @@
             }
         }
         
-        // إعداد listener للتحديث الفوري
         function setupUserListener(userId) {
             if (userListener) {
                 userListener();
@@ -1302,7 +1197,6 @@
             });
         }
         
-        // تسجيل الخروج
         function logoutUser() {
             if (userListener) {
                 userListener();
@@ -1315,7 +1209,6 @@
             showNotification(getTranslation('logout_success'), 'success');
         }
         
-        // تحديث واجهة المستخدم
         function updateUserInterface() {
             if (!currentUserData) return;
             
@@ -1332,7 +1225,6 @@
             document.getElementById('airplane-money').textContent = money;
         }
         
-        // تحديث الرصيد في Firebase
         async function updateUserMoney(newMoney) {
             if (!currentUserData || !isFirebaseConnected || !currentUserId) return;
             
@@ -1345,7 +1237,6 @@
             }
         }
         
-        // عرض قسم معين
         function showSection(sectionId) {
             const sections = ['login-section', 'main-section', 'store-section', 'dice-game', 'airplane-game'];
             sections.forEach(id => {
@@ -1353,13 +1244,8 @@
             });
             
             document.getElementById(sectionId).style.display = 'block';
-            
-            // إضافة تأثير ظهور
-            const section = document.getElementById(sectionId);
-            section.style.animation = 'fadeIn 0.5s ease';
         }
         
-        // عرض قسم تسجيل الدخول
         function showLoginSection() {
             showSection('login-section');
             currentUserData = null;
@@ -1368,7 +1254,6 @@
             document.getElementById('login-password').value = '';
         }
         
-        // تحميل المنتجات
         function loadProducts() {
             const products = [
                 { icon: "🥃", name: "whisky", price: 120, desc: currentLanguage === 'ar' ? 'ويسكي اسكتلندي أصلي' : 'Original Scotch whisky' },
@@ -1382,10 +1267,9 @@
             const container = document.getElementById('products-container');
             container.innerHTML = '';
             
-            products.forEach((product, index) => {
+            products.forEach(product => {
                 const productItem = document.createElement('div');
                 productItem.className = 'product-item';
-                productItem.style.animationDelay = `${index * 0.1}s`;
                 productItem.innerHTML = `
                     <div class="product-info">
                         <div class="product-icon">${product.icon}</div>
@@ -1412,7 +1296,6 @@
             });
         }
         
-        // شراء منتج
         async function buyProduct(productName, price) {
             if (!currentUserData) return;
             
@@ -1427,7 +1310,6 @@
             showNotification(`${getTranslation('purchase_success')} ${getTranslation(productName)}!`, 'success');
         }
         
-        // لعبة النرد
         async function playDice() {
             if (!currentUserData) return;
             
@@ -1491,7 +1373,6 @@
             }, 1000);
         }
         
-        // لعبة الطائرة
         async function playAirplane() {
             if (!currentUserData) return;
             

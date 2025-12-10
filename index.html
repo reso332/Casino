@@ -126,6 +126,7 @@
         
         .form-group {
             margin-bottom: 15px;
+            position: relative;
         }
         
         label {
@@ -137,18 +138,19 @@
         
         input {
             width: 100%;
-            padding: 12px;
+            padding: 12px 40px 12px 12px;
             border: 2px solid var(--border-color);
             border-radius: 8px;
             background-color: white;
             color: #2c3e50;
             font-size: 15px;
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
         }
         
         input:focus {
             outline: none;
             border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
         
         button {
@@ -198,6 +200,7 @@
             margin: 12px 0;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
+            animation: fadeIn 0.5s ease;
         }
         
         .user-info {
@@ -234,6 +237,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            animation: fadeInUp 0.5s ease;
         }
         
         .game:hover {
@@ -279,11 +283,11 @@
         }
         
         @keyframes roll {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(90deg); }
-            50% { transform: rotate(180deg); }
-            75% { transform: rotate(270deg); }
-            100% { transform: rotate(360deg); }
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(90deg) scale(1.1); }
+            50% { transform: rotate(180deg) scale(1); }
+            75% { transform: rotate(270deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
         }
         
         .airplane-container {
@@ -318,6 +322,7 @@
             transform: translateX(100%);
             transition: all 0.5s ease;
             max-width: 350px;
+            animation: slideIn 0.5s ease forwards;
         }
         
         .notification.show {
@@ -382,6 +387,12 @@
             background-color: white;
             color: #2c3e50;
             font-size: 15px;
+            transition: border-color 0.3s ease;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
         }
         
         .products-grid {
@@ -401,6 +412,7 @@
             border: 1px solid var(--border-color);
             flex-wrap: wrap;
             gap: 10px;
+            animation: fadeInUp 0.5s ease;
         }
         
         .product-info {
@@ -429,6 +441,7 @@
             font-size: 13px;
             z-index: 1000;
             display: none;
+            animation: fadeIn 0.5s ease;
         }
         
         .connection-status.connected {
@@ -439,6 +452,64 @@
         .connection-status.disconnected {
             background-color: var(--danger-color);
             display: block;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .password-toggle:hover {
+            color: var(--accent-color);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
         
         /* تحسينات للشاشات الصغيرة */
@@ -587,11 +658,15 @@
         /* تحسينات للأجهزة اللوحية */
         @media (hover: none) and (pointer: coarse) {
             button, .nav-btn, .game {
-                min-height: 44px; /* للحصول على مساحة لمس أفضل */
+                min-height: 44px;
             }
             
             input, select {
-                font-size: 16px; /* منع التكبير التلقائي على iOS */
+                font-size: 16px;
+                min-height: 44px;
+            }
+            
+            .password-toggle {
                 min-height: 44px;
             }
         }
@@ -627,7 +702,15 @@
             
             <div class="form-group">
                 <label for="login-id" id="id-label">رقم المستخدم:</label>
-                <input type="text" id="login-id" placeholder="أدخل رقم المستخدم فقط">
+                <input type="text" id="login-id" placeholder="أدخل رقم المستخدم">
+            </div>
+            
+            <div class="form-group">
+                <label for="login-password" id="password-label">كلمة المرور:</label>
+                <input type="password" id="login-password" placeholder="أدخل كلمة المرور">
+                <button type="button" class="password-toggle" id="toggle-password">
+                    <i class="fas fa-eye"></i>
+                </button>
             </div>
             
             <button id="login-btn">
@@ -827,13 +910,13 @@
         </div>
     </div>
 
-    <!-- Firebase SDK - الإصدار الصحيح -->
+    <!-- Firebase SDK -->
     <script type="module">
-        // Import Firebase - الإصدار الصحيح 10.12.2
+        // Import Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getDatabase, ref, get, update, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getDatabase, ref, get, update, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
         
-        // Firebase configuration - نفس الإعدادات التي أعطيتني إياها
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAKGrxv_GT3T3krYeYY5C-o7VmvLkG-gw0",
             authDomain: "cashapp-405b7.firebaseapp.com",
@@ -873,13 +956,11 @@
         // الترجمات
         const translations = {
             ar: {
-                // النصوص العامة
                 "app_title": "Blosfet Casino",
                 "login_title": "تسجيل الدخول",
                 "id_label": "رقم المستخدم:",
+                "password_label": "كلمة المرور:",
                 "login_btn": "دخول",
-                
-                // القسم الرئيسي
                 "balance_label": "رصيدك الحالي",
                 "games_label": "الألعاب المتاحة",
                 "dice_game_title": "لعبة النرد",
@@ -888,14 +969,10 @@
                 "airplane_game_desc": "الرهان على تحليق الطائرة",
                 "logout_text": "تسجيل الخروج",
                 "store_text": "المتجر",
-                
-                // المتجر
                 "store_title": "المتجر",
                 "store_balance_label": "رصيدك الحالي",
                 "back_text": "رجوع",
                 "buy_btn": "شراء",
-                
-                // لعبة النرد
                 "dice_title": "لعبة النرد",
                 "dice_balance_label": "رصيدك الحالي",
                 "bet_amount_label": "مبلغ الرهان:",
@@ -904,29 +981,21 @@
                 "odd_option": "فردي (مضاعف 2x)",
                 "seven_option": "مجموع 7 (مضاعف 4x)",
                 "play_dice_text": "لعب",
-                
-                // لعبة الطائرة
                 "airplane_title": "لعبة الطائرة",
                 "airplane_balance_label": "رصيدك الحالي",
                 "high_option": "طيران عالٍ (مضاعف 2x)",
                 "low_option": "طيران منخفض (مضاعف 2x)",
                 "play_airplane_text": "لعب",
-                
-                // المنتجات
                 "whisky": "ويسكي سكوتش",
                 "wine": "نبيذ أحمر",
                 "beer": "بيرة محلية",
                 "martini": "مارتيني",
                 "champagne": "شامبانيا",
                 "mojito": "موخيتو",
-                "bourbon": "بوربون",
-                "margarita": "مارجريتا",
-                
-                // الرسائل
                 "login_success": "تم تسجيل الدخول بنجاح!",
-                "create_success": "تم إنشاء حساب جديد!",
                 "logout_success": "تم تسجيل الخروج بنجاح",
-                "fill_fields": "يرجى إدخال رقم المستخدم",
+                "fill_fields": "يرجى إدخال جميع الحقول",
+                "wrong_password": "كلمة المرور غير صحيحة",
                 "user_not_found": "المستخدم غير موجود",
                 "insufficient_balance": "رصيدك غير كافٍ",
                 "purchase_success": "تم الشراء بنجاح!",
@@ -936,13 +1005,11 @@
                 "no_connection": "لا يوجد اتصال بـ Firebase"
             },
             en: {
-                // General texts
                 "app_title": "Blosfet Casino",
                 "login_title": "Login",
                 "id_label": "User ID:",
+                "password_label": "Password:",
                 "login_btn": "Enter",
-                
-                // Main section
                 "balance_label": "Your Balance",
                 "games_label": "Available Games",
                 "dice_game_title": "Dice Game",
@@ -951,14 +1018,10 @@
                 "airplane_game_desc": "Bet on airplane flight",
                 "logout_text": "Logout",
                 "store_text": "Store",
-                
-                // Store
                 "store_title": "Store",
                 "store_balance_label": "Your Balance",
                 "back_text": "Back",
                 "buy_btn": "Buy",
-                
-                // Dice game
                 "dice_title": "Dice Game",
                 "dice_balance_label": "Your Balance",
                 "bet_amount_label": "Bet Amount:",
@@ -967,29 +1030,21 @@
                 "odd_option": "Odd (2x multiplier)",
                 "seven_option": "Sum 7 (4x multiplier)",
                 "play_dice_text": "Play",
-                
-                // Airplane game
                 "airplane_title": "Airplane Game",
                 "airplane_balance_label": "Your Balance",
                 "high_option": "High Flight (2x multiplier)",
                 "low_option": "Low Flight (2x multiplier)",
                 "play_airplane_text": "Play",
-                
-                // Products
                 "whisky": "Scotch Whisky",
                 "wine": "Red Wine",
                 "beer": "Local Beer",
                 "martini": "Martini",
                 "champagne": "Champagne",
                 "mojito": "Mojito",
-                "bourbon": "Bourbon",
-                "margarita": "Margarita",
-                
-                // Messages
                 "login_success": "Logged in successfully!",
-                "create_success": "Account created successfully!",
                 "logout_success": "Logged out successfully",
-                "fill_fields": "Please enter user ID",
+                "fill_fields": "Please fill all fields",
+                "wrong_password": "Wrong password",
                 "user_not_found": "User not found",
                 "insufficient_balance": "Insufficient balance",
                 "purchase_success": "Purchase successful!",
@@ -1002,50 +1057,47 @@
         
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
-            // إعداد event listeners
             setupEventListeners();
-            
-            // تحميل الإعدادات من التخزين المحلي
             loadSettings();
-            
-            // تحميل المنتجات
             loadProducts();
-            
-            // تحديث الترجمات
             updateTranslations();
-            
-            // التحقق من تسجيل الدخول السابق
-            checkPreviousLogin();
         });
         
         // إعداد مستمعي الأحداث
         function setupEventListeners() {
-            // تبديل الوضع الداكن
             document.getElementById('theme-toggle').addEventListener('click', toggleDarkMode);
-            
-            // تبديل اللغة
             document.getElementById('language-toggle').addEventListener('click', toggleLanguage);
-            
-            // تسجيل الدخول
             document.getElementById('login-btn').addEventListener('click', loginUser);
-            
-            // تسجيل الخروج
+            document.getElementById('toggle-password').addEventListener('click', togglePasswordVisibility);
             document.getElementById('logout-btn').addEventListener('click', logoutUser);
-            
-            // التنقل بين الأقسام
             document.getElementById('dice-game-btn').addEventListener('click', () => showSection('dice-game'));
             document.getElementById('airplane-game-btn').addEventListener('click', () => showSection('airplane-game'));
             document.getElementById('store-btn').addEventListener('click', () => showSection('store-section'));
             document.getElementById('back-to-main').addEventListener('click', () => showSection('main-section'));
             document.getElementById('back-from-dice').addEventListener('click', () => showSection('main-section'));
             document.getElementById('back-from-airplane').addEventListener('click', () => showSection('main-section'));
-            
-            // الألعاب
             document.getElementById('play-dice').addEventListener('click', playDice);
             document.getElementById('play-airplane').addEventListener('click', playAirplane);
-            
-            // اختبار اتصال Firebase عند النقر المزدوج على الشعار
             document.getElementById('app-logo').addEventListener('dblclick', testFirebaseConnection);
+            document.getElementById('login-password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') loginUser();
+            });
+        }
+        
+        // إظهار/إخفاء كلمة المرور
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('login-password');
+            const toggleBtn = document.getElementById('toggle-password');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                toggleBtn.style.animation = 'fadeIn 0.3s ease';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
+                toggleBtn.style.animation = 'fadeIn 0.3s ease';
+            }
         }
         
         // عرض حالة الاتصال
@@ -1097,7 +1149,6 @@
                 updateLanguageButton();
             }
             
-            // لا نحفظ حالة تسجيل الدخول - يعود دائماً لصفحة تسجيل الدخول
             showLoginSection();
         }
         
@@ -1129,20 +1180,11 @@
         // تبديل اللغة
         function toggleLanguage() {
             currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
-            
-            // تغيير اتجاه النص
             document.documentElement.setAttribute('dir', currentLanguage === 'ar' ? 'rtl' : 'ltr');
             document.documentElement.setAttribute('lang', currentLanguage);
-            
-            // تحديث زر اللغة
             updateLanguageButton();
-            
-            // تحديث الترجمات
             updateTranslations();
-            
-            // إعادة تحميل المنتجات بلغة جديدة
             loadProducts();
-            
             localStorage.setItem('language', currentLanguage);
         }
         
@@ -1159,7 +1201,6 @@
         
         // تحديث جميع الترجمات
         function updateTranslations() {
-            // تحديث جميع النصوص
             const elements = document.querySelectorAll('[id]');
             elements.forEach(element => {
                 const id = element.id;
@@ -1169,36 +1210,31 @@
                 }
             });
             
-            // تحديث placeholders
             document.getElementById('login-id').placeholder = 
-                currentLanguage === 'ar' ? 'أدخل رقم المستخدم فقط' : 'Enter user ID only';
-        }
-        
-        // تحديث خيارات select
-        function updateSelectOptions() {
-            const diceOptions = document.querySelectorAll('#dice-choice option');
-            diceOptions[0].textContent = getTranslation('even_option');
-            diceOptions[1].textContent = getTranslation('odd_option');
-            diceOptions[2].textContent = getTranslation('seven_option');
+                currentLanguage === 'ar' ? 'أدخل رقم المستخدم' : 'Enter user ID';
             
-            const airplaneOptions = document.querySelectorAll('#airplane-choice option');
-            airplaneOptions[0].textContent = getTranslation('high_option');
-            airplaneOptions[1].textContent = getTranslation('low_option');
+            document.getElementById('login-password').placeholder = 
+                currentLanguage === 'ar' ? 'أدخل كلمة المرور' : 'Enter password';
+            
+            document.getElementById('bet-amount-dice').placeholder = 
+                currentLanguage === 'ar' ? 'أدخل مبلغ الرهان' : 'Enter bet amount';
+            
+            document.getElementById('bet-amount-airplane').placeholder = 
+                currentLanguage === 'ar' ? 'أدخل مبلغ الرهان' : 'Enter bet amount';
         }
         
         // عرض إشعار
         function showNotification(message, type) {
             const notification = document.getElementById('notification');
             notification.textContent = message;
-            notification.className = `notification ${type}`;
-            notification.classList.add('show');
+            notification.className = `notification ${type} show`;
             
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
         }
         
-        // تسجيل الدخول - بالإيد فقط (بدون كلمة مرور)
+        // تسجيل الدخول - مع كلمة المرور
         async function loginUser() {
             if (!isFirebaseConnected) {
                 showNotification(getTranslation('no_connection'), 'error');
@@ -1206,69 +1242,41 @@
             }
             
             const userId = document.getElementById('login-id').value.trim();
+            const password = document.getElementById('login-password').value.trim();
             
-            if (!userId) {
+            if (!userId || !password) {
                 showNotification(getTranslation('fill_fields'), 'error');
                 return;
             }
             
             try {
-                console.log("🔍 جاري البحث عن المستخدم:", userId);
-                
-                // البحث عن المستخدم في قاعدة البيانات
                 const userRef = ref(database, 'users/' + userId);
                 const snapshot = await get(userRef);
                 
                 if (snapshot.exists()) {
-                    // المستخدم موجود - تسجيل الدخول
                     const userData = snapshot.val();
-                    console.log("✅ المستخدم موجود:", userData);
                     
-                    // حفظ بيانات المستخدم
-                    currentUserData = userData;
-                    currentUserId = userId;
-                    
-                    // 🔥 **الإضافة الجديدة: إضافة listener للتحديث الفوري**
-                    setupUserListener(userId);
-                    
-                    // تحديث الواجهة
-                    updateUserInterface();
-                    
-                    // عرض القسم الرئيسي
-                    showSection('main-section');
-                    showNotification(getTranslation('login_success'), 'success');
+                    if (userData.password === password) {
+                        currentUserData = userData;
+                        currentUserId = userId;
+                        
+                        setupUserListener(userId);
+                        updateUserInterface();
+                        showSection('main-section');
+                        showNotification(getTranslation('login_success'), 'success');
+                        
+                        document.getElementById('login-id').value = '';
+                        document.getElementById('login-password').value = '';
+                        
+                    } else {
+                        showNotification(getTranslation('wrong_password'), 'error');
+                        document.getElementById('login-password').focus();
+                    }
                     
                 } else {
-                    // المستخدم غير موجود - إنشاء حساب جديد
-                    console.log("🆕 إنشاء حساب جديد للمستخدم:", userId);
-                    
-                    // إنشاء بيانات المستخدم الجديد
-                    const newUserData = {
-                        name: `مستخدم ${userId}`,
-                        money: 1000, // رصيد ابتدائي
-                        createdAt: new Date().toISOString()
-                    };
-                    
-                    // حفظ المستخدم الجديد في Firebase
-                    await set(userRef, newUserData);
-                    
-                    // حفظ بيانات المستخدم
-                    currentUserData = newUserData;
-                    currentUserId = userId;
-                    
-                    // 🔥 **الإضافة الجديدة: إضافة listener للتحديث الفوري**
-                    setupUserListener(userId);
-                    
-                    // تحديث الواجهة
-                    updateUserInterface();
-                    
-                    // عرض القسم الرئيسي
-                    showSection('main-section');
-                    showNotification(getTranslation('create_success'), 'success');
+                    showNotification(getTranslation('user_not_found'), 'error');
+                    document.getElementById('login-id').focus();
                 }
-                
-                // تنظيف الحقل
-                document.getElementById('login-id').value = '';
                 
             } catch (error) {
                 console.error('❌ خطأ في تسجيل الدخول:', error);
@@ -1276,27 +1284,19 @@
             }
         }
         
-        // 🔥 **وظيفة جديدة: إعداد listener للتحديث الفوري**
+        // إعداد listener للتحديث الفوري
         function setupUserListener(userId) {
-            // إزالة الـ listener السابق إذا كان موجوداً
             if (userListener) {
                 userListener();
                 userListener = null;
             }
             
-            // إضافة listener جديد للتحديث الفوري
             const userRef = ref(database, 'users/' + userId);
             userListener = onValue(userRef, (snapshot) => {
                 if (snapshot.exists()) {
-                    const updatedUserData = snapshot.val();
-                    currentUserData = updatedUserData;
-                    
-                    // تحديث الواجهة مباشرة
+                    currentUserData = snapshot.val();
                     updateUserInterface();
-                    
-                    console.log("✅ تم تحديث بيانات المستخدم مباشرة من Firebase:", updatedUserData);
                 } else {
-                    console.log("❌ المستخدم تم حذفه من Firebase");
                     logoutUser();
                 }
             });
@@ -1304,19 +1304,14 @@
         
         // تسجيل الخروج
         function logoutUser() {
-            // إزالة الـ listener
             if (userListener) {
                 userListener();
                 userListener = null;
             }
             
-            // إعادة تعيين المتغيرات
             currentUserData = null;
             currentUserId = null;
-            
-            // عرض قسم تسجيل الدخول
             showLoginSection();
-            
             showNotification(getTranslation('logout_success'), 'success');
         }
         
@@ -1335,8 +1330,6 @@
             document.getElementById('store-money').textContent = money;
             document.getElementById('dice-money').textContent = money;
             document.getElementById('airplane-money').textContent = money;
-            
-            console.log("✅ تم تحديث الواجهة للمستخدم:", currentUserData);
         }
         
         // تحديث الرصيد في Firebase
@@ -1344,17 +1337,8 @@
             if (!currentUserData || !isFirebaseConnected || !currentUserId) return;
             
             try {
-                console.log("💰 جاري تحديث الرصيد:", newMoney);
-                
-                // تحديث الرصيد في Firebase مباشرة
                 const userRef = ref(database, 'users/' + currentUserId);
-                await update(userRef, {
-                    money: newMoney
-                });
-                
-                // لا نحتاج لتحديث البيانات المحلية لأن الـ listener سيفعل ذلك تلقائياً
-                console.log("✅ تم تحديث الرصيد بنجاح في Firebase");
-                
+                await update(userRef, { money: newMoney });
             } catch (error) {
                 console.error('❌ خطأ في تحديث الرصيد:', error);
                 showNotification(getTranslation('db_error'), 'error');
@@ -1363,14 +1347,16 @@
         
         // عرض قسم معين
         function showSection(sectionId) {
-            // إخفاء جميع الأقسام
             const sections = ['login-section', 'main-section', 'store-section', 'dice-game', 'airplane-game'];
             sections.forEach(id => {
                 document.getElementById(id).style.display = 'none';
             });
             
-            // عرض القسم المطلوب
             document.getElementById(sectionId).style.display = 'block';
+            
+            // إضافة تأثير ظهور
+            const section = document.getElementById(sectionId);
+            section.style.animation = 'fadeIn 0.5s ease';
         }
         
         // عرض قسم تسجيل الدخول
@@ -1378,9 +1364,8 @@
             showSection('login-section');
             currentUserData = null;
             currentUserId = null;
-            
-            // تنظيف الحقول
             document.getElementById('login-id').value = '';
+            document.getElementById('login-password').value = '';
         }
         
         // تحميل المنتجات
@@ -1397,9 +1382,10 @@
             const container = document.getElementById('products-container');
             container.innerHTML = '';
             
-            products.forEach(product => {
+            products.forEach((product, index) => {
                 const productItem = document.createElement('div');
                 productItem.className = 'product-item';
+                productItem.style.animationDelay = `${index * 0.1}s`;
                 productItem.innerHTML = `
                     <div class="product-info">
                         <div class="product-icon">${product.icon}</div>
@@ -1419,7 +1405,6 @@
                 
                 container.appendChild(productItem);
                 
-                // إضافة مستمع الحدث لزر الشراء
                 const buyBtn = productItem.querySelector('button');
                 buyBtn.addEventListener('click', function() {
                     buyProduct(product.name, product.price);
@@ -1454,13 +1439,16 @@
                 return;
             }
             
-            // تأثير الهز للنرد
+            if (betAmount < 1) {
+                showNotification(currentLanguage === 'ar' ? 'يرجى إدخال مبلغ رهان صحيح' : 'Please enter a valid bet amount', 'error');
+                return;
+            }
+            
             const dice1 = document.getElementById('dice1');
             const dice2 = document.getElementById('dice2');
             
             dice1.classList.add('rolling');
             dice2.classList.add('rolling');
-            
             document.getElementById('play-dice').disabled = true;
             
             setTimeout(async () => {
@@ -1470,10 +1458,8 @@
                 
                 dice1.textContent = dice1Value;
                 dice2.textContent = dice2Value;
-                
                 dice1.classList.remove('rolling');
                 dice2.classList.remove('rolling');
-                
                 document.getElementById('play-dice').disabled = false;
                 
                 let win = false;
@@ -1517,9 +1503,13 @@
                 return;
             }
             
+            if (betAmount < 1) {
+                showNotification(currentLanguage === 'ar' ? 'يرجى إدخال مبلغ رهان صحيح' : 'Please enter a valid bet amount', 'error');
+                return;
+            }
+            
             const airplane = document.getElementById('airplane');
             airplane.style.top = '45px';
-            
             document.getElementById('play-airplane').disabled = true;
             
             const result = Math.random() > 0.5 ? 'up' : 'down';
@@ -1535,8 +1525,8 @@
                     document.getElementById('play-airplane').disabled = false;
                     
                     const win = choice === result;
-                    
                     let newMoney;
+                    
                     if (win) {
                         const winAmount = betAmount * 2;
                         newMoney = currentUserData.money + winAmount;

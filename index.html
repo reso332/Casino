@@ -1,66 +1,1555 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>تسجيل دخول</title>
-  <style>
-    body { font-family: Arial; padding: 20px; background: #eee; }
-    .box { width: 320px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
-    input, button { width: 100%; padding: 12px; margin-top: 10px; }
-    #result { margin-top: 15px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blosfet Casino</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --header-color: #6c757d;
+            --bg-color: #ffffff;
+            --card-bg: #f8f9fa;
+            --text-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --border-color: #dee2e6;
+        }
+        
+        .dark-mode {
+            --header-color: #2c3e50;
+            --bg-color: #1a2530;
+            --card-bg: #2c3e50;
+            --text-color: #ecf0f1;
+            --accent-color: #3498db;
+            --success-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --border-color: #34495e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background-color: var(--header-color);
+            padding: 15px 20px;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .logo i {
+            color: white;
+            font-size: 26px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .section {
+            background-color: var(--card-bg);
+            border-radius: 0 0 15px 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            width: 100%;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background-color: white;
+            color: #2c3e50;
+            font-size: 15px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 8px;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+        }
+        
+        .btn-success:hover {
+            background-color: #219653;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .main-section {
+            display: none;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 18px;
+            margin: 12px 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+        
+        .user-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .balance {
+            font-size: 26px;
+            font-weight: bold;
+            color: var(--success-color);
+        }
+        
+        .game-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .game {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .game:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game i {
+            font-size: 36px;
+            margin-bottom: 8px;
+            color: var(--accent-color);
+        }
+        
+        .dice-game, .airplane-game {
+            display: none;
+        }
+        
+        .dice-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .dice {
+            width: 70px;
+            height: 70px;
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            color: #2c3e50;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            border: 1px solid var(--border-color);
+        }
+        
+        .rolling {
+            animation: roll 1s ease-out;
+        }
+        
+        @keyframes roll {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(90deg); }
+            50% { transform: rotate(180deg); }
+            75% { transform: rotate(270deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .airplane-container {
+            height: 130px;
+            position: relative;
+            margin: 20px 0;
+            background: linear-gradient(to bottom, var(--accent-color), var(--header-color));
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        
+        .airplane {
+            position: absolute;
+            font-size: 36px;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: top 0.5s ease-in-out;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            z-index: 2000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease;
+            max-width: 350px;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background-color: var(--success-color);
+        }
+        
+        .notification.error {
+            background-color: var(--danger-color);
+        }
+        
+        .logout-btn {
+            background: var(--danger-color);
+            margin-top: 15px;
+        }
+        
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            padding: 7px 12px;
+            background: var(--accent-color);
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            color: white;
+            border: none;
+        }
+        
+        .user-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-color);
+            font-weight: 600;
+            flex-wrap: wrap;
+        }
+        
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background-color: white;
+            color: #2c3e50;
+            font-size: 15px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .product-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .product-icon {
+            font-size: 28px;
+        }
+        
+        .product-price {
+            color: var(--success-color);
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .connection-status {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: white;
+            font-size: 13px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .connection-status.connected {
+            background-color: var(--success-color);
+            display: block;
+        }
+        
+        .connection-status.disconnected {
+            background-color: var(--danger-color);
+            display: block;
+        }
+        
+        /* تحسينات للشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 95%;
+                padding: 10px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 12px 15px;
+                gap: 10px;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            .logo i {
+                font-size: 24px;
+            }
+            
+            .controls {
+                gap: 8px;
+            }
+            
+            .control-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+            
+            .game-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-nav {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            
+            .nav-buttons {
+                justify-content: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dice-container {
+                gap: 10px;
+            }
+            
+            .dice {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            .airplane-container {
+                height: 120px;
+            }
+            
+            .airplane {
+                font-size: 32px;
+                top: 40px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                max-width: 100%;
+                padding: 5px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .section-title {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+            
+            .user-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .balance {
+                font-size: 24px;
+            }
+            
+            .product-item {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            
+            .product-info {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        /* تحسينات للشاشات الكبيرة */
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 900px;
+            }
+            
+            .game-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        /* تحسينات للآيباد */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .container {
+                max-width: 700px;
+            }
+            
+            .game-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* تحسينات للأجهزة اللوحية */
+        @media (hover: none) and (pointer: coarse) {
+            button, .nav-btn, .game {
+                min-height: 44px; /* للحصول على مساحة لمس أفضل */
+            }
+            
+            input, select {
+                font-size: 16px; /* منع التكبير التلقائي على iOS */
+                min-height: 44px;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="notification" id="notification"></div>
+    <div class="connection-status" id="connection-status"></div>
+    
+    <div class="container">
+        <!-- الهيدر -->
+        <div class="header">
+            <div class="logo" id="app-logo">
+                <i class="fas fa-dice"></i>
+                <span id="app-title">Blosfet Casino</span>
+            </div>
+            <div class="controls">
+                <button class="control-btn" id="theme-toggle" title="تبديل الوضع">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="control-btn" id="language-toggle" title="تغيير اللغة">
+                    <span id="lang-text">EN</span>
+                </button>
+            </div>
+        </div>
 
-<div class="box">
-  <h2>تسجيل دخول</h2>
+        <!-- قسم تسجيل الدخول -->
+        <div class="section" id="login-section">
+            <h2 class="section-title">
+                <i class="fas fa-sign-in-alt"></i>
+                <span id="login-title">تسجيل الدخول</span>
+            </h2>
+            
+            <div class="form-group">
+                <label for="login-id" id="id-label">رقم المستخدم:</label>
+                <input type="text" id="login-id" placeholder="أدخل رقم المستخدم فقط">
+            </div>
+            
+            <button id="login-btn">
+                <i class="fas fa-sign-in-alt"></i>
+                <span id="login-btn-text">دخول</span>
+            </button>
+            
+            <div class="card" style="margin-top: 15px; display: none;" id="error-message">
+                <div style="text-align: center; color: var(--danger-color);">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 28px; margin-bottom: 8px;"></i>
+                    <h3 id="error-title" style="font-size: 16px;">خطأ في الاتصال</h3>
+                    <p id="error-text" style="font-size: 14px;">تعذر الاتصال بقاعدة البيانات. يرجى المحاولة لاحقًا.</p>
+                </div>
+            </div>
+        </div>
 
-  <input id="userId" placeholder="ID المستخدم">
-  <input id="password" type="password" placeholder="الرمز">
+        <!-- القسم الرئيسي بعد التسجيل -->
+        <div class="section main-section" id="main-section">
+            <div class="header-nav">
+                <div class="user-display">
+                    <i class="fas fa-user-circle" style="font-size: 22px; color: var(--accent-color);"></i>
+                    <span id="user-name">المستخدم</span>
+                </div>
+                <div class="nav-buttons">
+                    <button class="nav-btn" id="store-btn">
+                        <i class="fas fa-store"></i>
+                        <span id="store-text">المتجر</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="user-info">
+                    <div>
+                        <h3 id="balance-label">رصيدك الحالي</h3>
+                        <p id="user-id" style="color: #666; font-size: 13px;">رقم المستخدم: <span id="user-id-value">-</span></p>
+                    </div>
+                    <div class="balance">
+                        $<span id="user-money">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 style="margin: 15px 0 12px 0; text-align: center; color: var(--text-color); font-size: 18px;" id="games-label">الألعاب المتاحة</h3>
+            
+            <div class="game-container">
+                <div class="game" id="dice-game-btn">
+                    <i class="fas fa-dice"></i>
+                    <h4 id="dice-game-title">لعبة النرد</h4>
+                    <p id="dice-game-desc" style="color: #666; font-size: 13px;">الرهان على نتيجة النرد</p>
+                </div>
+                <div class="game" id="airplane-game-btn">
+                    <i class="fas fa-plane"></i>
+                    <h4 id="airplane-game-title">لعبة الطائرة</h4>
+                    <p id="airplane-game-desc" style="color: #666; font-size: 13px;">الرهان على تحليق الطائرة</p>
+                </div>
+            </div>
+            
+            <button class="logout-btn" id="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span id="logout-text">تسجيل الخروج</span>
+            </button>
+        </div>
 
-  <button onclick="login()">دخول</button>
+        <!-- قسم المتجر -->
+        <div class="section main-section" id="store-section">
+            <div class="header-nav">
+                <div class="user-display">
+                    <i class="fas fa-store" style="color: var(--accent-color);"></i>
+                    <span id="store-title">المتجر</span>
+                </div>
+                <div class="nav-buttons">
+                    <button class="nav-btn" id="back-to-main">
+                        <i class="fas fa-arrow-right"></i>
+                        <span id="back-text">رجوع</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="user-info">
+                    <div>
+                        <h3 id="store-balance-label">رصيدك الحالي</h3>
+                        <p style="color: #666; font-size: 13px;">رقم المستخدم: <span id="store-id-value">-</span></p>
+                    </div>
+                    <div class="balance">
+                        $<span id="store-money">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="products-grid" id="products-container">
+                <!-- المنتجات ستضاف عبر JavaScript -->
+            </div>
+        </div>
 
-  <div id="result"></div>
-</div>
+        <!-- لعبة النرد -->
+        <div class="section dice-game main-section" id="dice-game">
+            <div class="header-nav">
+                <div class="user-display">
+                    <i class="fas fa-dice" style="color: var(--accent-color);"></i>
+                    <span id="dice-title">لعبة النرد</span>
+                </div>
+                <div class="nav-buttons">
+                    <button class="nav-btn" id="back-from-dice">
+                        <i class="fas fa-arrow-right"></i>
+                        <span>رجوع</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="user-info">
+                    <div>
+                        <h3 id="dice-balance-label">رصيدك الحالي</h3>
+                        <p style="color: #666; font-size: 13px;">رقم المستخدم: <span id="dice-id-value">-</span></p>
+                    </div>
+                    <div class="balance">
+                        $<span id="dice-money">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dice-container">
+                <div class="dice" id="dice1">1</div>
+                <div class="dice" id="dice2">2</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="bet-amount-dice" id="bet-amount-label">مبلغ الرهان:</label>
+                <input type="number" id="bet-amount-dice" min="1" value="10">
+            </div>
+            
+            <div class="form-group">
+                <label for="dice-choice" id="bet-choice-label">اختر الرهان:</label>
+                <select id="dice-choice">
+                    <option value="even" id="even-option">زوجي (مضاعف 2x)</option>
+                    <option value="odd" id="odd-option">فردي (مضاعف 2x)</option>
+                    <option value="7" id="seven-option">مجموع 7 (مضاعف 4x)</option>
+                </select>
+            </div>
+            
+            <button id="play-dice">
+                <i class="fas fa-play"></i>
+                <span id="play-dice-text">لعب</span>
+            </button>
+        </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-  import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+        <!-- لعبة الطائرة -->
+        <div class="section airplane-game main-section" id="airplane-game">
+            <div class="header-nav">
+                <div class="user-display">
+                    <i class="fas fa-plane" style="color: var(--accent-color);"></i>
+                    <span id="airplane-title">لعبة الطائرة</span>
+                </div>
+                <div class="nav-buttons">
+                    <button class="nav-btn" id="back-from-airplane">
+                        <i class="fas fa-arrow-right"></i>
+                        <span>رجوع</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="user-info">
+                    <div>
+                        <h3 id="airplane-balance-label">رصيدك الحالي</h3>
+                        <p style="color: #666; font-size: 13px;">رقم المستخدم: <span id="airplane-id-value">-</span></p>
+                    </div>
+                    <div class="balance">
+                        $<span id="airplane-money">0</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="airplane-container">
+                <div class="airplane" id="airplane">✈</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="bet-amount-airplane">مبلغ الرهان:</label>
+                <input type="number" id="bet-amount-airplane" min="1" value="10">
+            </div>
+            
+            <div class="form-group">
+                <label for="airplane-choice">اختر الرهان:</label>
+                <select id="airplane-choice">
+                    <option value="up" id="high-option">طيران عالٍ (مضاعف 2x)</option>
+                    <option value="down" id="low-option">طيران منخفض (مضاعف 2x)</option>
+                </select>
+            </div>
+            
+            <button id="play-airplane">
+                <i class="fas fa-play"></i>
+                <span id="play-airplane-text">لعب</span>
+            </button>
+        </div>
+    </div>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAKGrxv_GT3T3krYeYY5C-o7VmvLkG-gw0",
-    authDomain: "cashapp-405b7.firebaseapp.com",
-    databaseURL: "https://cashapp-405b7-default-rtdb.firebaseio.com",
-    projectId: "cashapp-405b7",
-    storageBucket: "cashapp-405b7.firebasestorage.app",
-    messagingSenderId: "146496743526",
-    appId: "1:146496743526:web:edc0318c7f3affa25465a7",
-    measurementId: "G-NWMR38V1B9"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  async function login() {
-    const id = document.getElementById("userId").value.trim();
-    const pass = document.getElementById("password").value.trim();
-    const result = document.getElementById("result");
-
-    const userRef = ref(db, "users/" + id);
-    const snapshot = await get(userRef);
-
-    if (!snapshot.exists()) {
-      result.innerHTML = "❌ ID غير صحيح";
-      return;
-    }
-
-    const data = snapshot.val();
-
-    if (data.password !== pass) {
-      result.innerHTML = "❌ الرمز غير صحيح";
-      return;
-    }
-
-    result.innerHTML = `
-      ✔️ <b>اسم:</b> ${da
+    <!-- Firebase SDK - الإصدار الصحيح -->
+    <script type="module">
+        // Import Firebase - الإصدار الصحيح 10.12.2
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, get, update, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        
+        // Firebase configuration - نفس الإعدادات التي أعطيتني إياها
+        const firebaseConfig = {
+            apiKey: "AIzaSyAKGrxv_GT3T3krYeYY5C-o7VmvLkG-gw0",
+            authDomain: "cashapp-405b7.firebaseapp.com",
+            databaseURL: "https://cashapp-405b7-default-rtdb.firebaseio.com",
+            projectId: "cashapp-405b7",
+            storageBucket: "cashapp-405b7.firebasestorage.app",
+            messagingSenderId: "146496743526",
+            appId: "1:146496743526:web:edc0318c7f3affa25465a7",
+            measurementId: "G-NWMR38V1B9"
+        };
+        
+        // Initialize Firebase
+        let app;
+        let database;
+        let isFirebaseConnected = false;
+        let currentUserData = null;
+        let currentUserId = null;
+        let userListener = null;
+        
+        // محاولة الاتصال بـ Firebase
+        try {
+            app = initializeApp(firebaseConfig);
+            database = getDatabase(app);
+            isFirebaseConnected = true;
+            console.log("✅ Firebase connected successfully!");
+            showConnectionStatus('connected', 'Firebase متصل بنجاح');
+        } catch (error) {
+            console.error("❌ Firebase connection error:", error);
+            showConnectionStatus('disconnected', 'خطأ في اتصال Firebase');
+            document.getElementById('error-message').style.display = 'block';
+        }
+        
+        // البيانات
+        let currentLanguage = 'ar';
+        let isDarkMode = false;
+        
+        // الترجمات
+        const translations = {
+            ar: {
+                // النصوص العامة
+                "app_title": "Blosfet Casino",
+                "login_title": "تسجيل الدخول",
+                "id_label": "رقم المستخدم:",
+                "login_btn": "دخول",
+                
+                // القسم الرئيسي
+                "balance_label": "رصيدك الحالي",
+                "games_label": "الألعاب المتاحة",
+                "dice_game_title": "لعبة النرد",
+                "dice_game_desc": "الرهان على نتيجة النرد",
+                "airplane_game_title": "لعبة الطائرة",
+                "airplane_game_desc": "الرهان على تحليق الطائرة",
+                "logout_text": "تسجيل الخروج",
+                "store_text": "المتجر",
+                
+                // المتجر
+                "store_title": "المتجر",
+                "store_balance_label": "رصيدك الحالي",
+                "back_text": "رجوع",
+                "buy_btn": "شراء",
+                
+                // لعبة النرد
+                "dice_title": "لعبة النرد",
+                "dice_balance_label": "رصيدك الحالي",
+                "bet_amount_label": "مبلغ الرهان:",
+                "bet_choice_label": "اختر الرهان:",
+                "even_option": "زوجي (مضاعف 2x)",
+                "odd_option": "فردي (مضاعف 2x)",
+                "seven_option": "مجموع 7 (مضاعف 4x)",
+                "play_dice_text": "لعب",
+                
+                // لعبة الطائرة
+                "airplane_title": "لعبة الطائرة",
+                "airplane_balance_label": "رصيدك الحالي",
+                "high_option": "طيران عالٍ (مضاعف 2x)",
+                "low_option": "طيران منخفض (مضاعف 2x)",
+                "play_airplane_text": "لعب",
+                
+                // المنتجات
+                "whisky": "ويسكي سكوتش",
+                "wine": "نبيذ أحمر",
+                "beer": "بيرة محلية",
+                "martini": "مارتيني",
+                "champagne": "شامبانيا",
+                "mojito": "موخيتو",
+                "bourbon": "بوربون",
+                "margarita": "مارجريتا",
+                
+                // الرسائل
+                "login_success": "تم تسجيل الدخول بنجاح!",
+                "create_success": "تم إنشاء حساب جديد!",
+                "logout_success": "تم تسجيل الخروج بنجاح",
+                "fill_fields": "يرجى إدخال رقم المستخدم",
+                "user_not_found": "المستخدم غير موجود",
+                "insufficient_balance": "رصيدك غير كافٍ",
+                "purchase_success": "تم الشراء بنجاح!",
+                "win": "مبروك! لقد فزت",
+                "lose": "للأسف! لقد خسرت",
+                "db_error": "خطأ في قاعدة البيانات",
+                "no_connection": "لا يوجد اتصال بـ Firebase"
+            },
+            en: {
+                // General texts
+                "app_title": "Blosfet Casino",
+                "login_title": "Login",
+                "id_label": "User ID:",
+                "login_btn": "Enter",
+                
+                // Main section
+                "balance_label": "Your Balance",
+                "games_label": "Available Games",
+                "dice_game_title": "Dice Game",
+                "dice_game_desc": "Bet on dice results",
+                "airplane_game_title": "Airplane Game",
+                "airplane_game_desc": "Bet on airplane flight",
+                "logout_text": "Logout",
+                "store_text": "Store",
+                
+                // Store
+                "store_title": "Store",
+                "store_balance_label": "Your Balance",
+                "back_text": "Back",
+                "buy_btn": "Buy",
+                
+                // Dice game
+                "dice_title": "Dice Game",
+                "dice_balance_label": "Your Balance",
+                "bet_amount_label": "Bet Amount:",
+                "bet_choice_label": "Choose Bet:",
+                "even_option": "Even (2x multiplier)",
+                "odd_option": "Odd (2x multiplier)",
+                "seven_option": "Sum 7 (4x multiplier)",
+                "play_dice_text": "Play",
+                
+                // Airplane game
+                "airplane_title": "Airplane Game",
+                "airplane_balance_label": "Your Balance",
+                "high_option": "High Flight (2x multiplier)",
+                "low_option": "Low Flight (2x multiplier)",
+                "play_airplane_text": "Play",
+                
+                // Products
+                "whisky": "Scotch Whisky",
+                "wine": "Red Wine",
+                "beer": "Local Beer",
+                "martini": "Martini",
+                "champagne": "Champagne",
+                "mojito": "Mojito",
+                "bourbon": "Bourbon",
+                "margarita": "Margarita",
+                
+                // Messages
+                "login_success": "Logged in successfully!",
+                "create_success": "Account created successfully!",
+                "logout_success": "Logged out successfully",
+                "fill_fields": "Please enter user ID",
+                "user_not_found": "User not found",
+                "insufficient_balance": "Insufficient balance",
+                "purchase_success": "Purchase successful!",
+                "win": "Congratulations! You won",
+                "lose": "Sorry! You lost",
+                "db_error": "Database error",
+                "no_connection": "No connection to Firebase"
+            }
+        };
+        
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // إعداد event listeners
+            setupEventListeners();
+            
+            // تحميل الإعدادات من التخزين المحلي
+            loadSettings();
+            
+            // تحميل المنتجات
+            loadProducts();
+            
+            // تحديث الترجمات
+            updateTranslations();
+            
+            // التحقق من تسجيل الدخول السابق
+            checkPreviousLogin();
+        });
+        
+        // إعداد مستمعي الأحداث
+        function setupEventListeners() {
+            // تبديل الوضع الداكن
+            document.getElementById('theme-toggle').addEventListener('click', toggleDarkMode);
+            
+            // تبديل اللغة
+            document.getElementById('language-toggle').addEventListener('click', toggleLanguage);
+            
+            // تسجيل الدخول
+            document.getElementById('login-btn').addEventListener('click', loginUser);
+            
+            // تسجيل الخروج
+            document.getElementById('logout-btn').addEventListener('click', logoutUser);
+            
+            // التنقل بين الأقسام
+            document.getElementById('dice-game-btn').addEventListener('click', () => showSection('dice-game'));
+            document.getElementById('airplane-game-btn').addEventListener('click', () => showSection('airplane-game'));
+            document.getElementById('store-btn').addEventListener('click', () => showSection('store-section'));
+            document.getElementById('back-to-main').addEventListener('click', () => showSection('main-section'));
+            document.getElementById('back-from-dice').addEventListener('click', () => showSection('main-section'));
+            document.getElementById('back-from-airplane').addEventListener('click', () => showSection('main-section'));
+            
+            // الألعاب
+            document.getElementById('play-dice').addEventListener('click', playDice);
+            document.getElementById('play-airplane').addEventListener('click', playAirplane);
+            
+            // اختبار اتصال Firebase عند النقر المزدوج على الشعار
+            document.getElementById('app-logo').addEventListener('dblclick', testFirebaseConnection);
+        }
+        
+        // عرض حالة الاتصال
+        function showConnectionStatus(status, message) {
+            const statusElement = document.getElementById('connection-status');
+            statusElement.textContent = message;
+            statusElement.className = `connection-status ${status}`;
+            
+            setTimeout(() => {
+                statusElement.style.display = 'none';
+            }, 3000);
+        }
+        
+        // اختبار اتصال Firebase
+        function testFirebaseConnection() {
+            if (!isFirebaseConnected || !database) {
+                showNotification(getTranslation('no_connection'), 'error');
+                return;
+            }
+            
+            try {
+                const testRef = ref(database, 'test');
+                get(testRef).then(() => {
+                    showNotification('✅ قاعدة البيانات متصلة بنجاح', 'success');
+                    showConnectionStatus('connected', '✅ قاعدة البيانات متصلة');
+                }).catch(error => {
+                    console.error("Firebase test error:", error);
+                    showNotification('❌ خطأ في الاتصال بقاعدة البيانات', 'error');
+                    showConnectionStatus('disconnected', '❌ خطأ في الاتصال');
+                });
+            } catch (error) {
+                console.error("Firebase test error:", error);
+                showNotification('❌ خطأ في الاتصال', 'error');
+                showConnectionStatus('disconnected', '❌ خطأ في الاتصال');
+            }
+        }
+        
+        // تحميل الإعدادات
+        function loadSettings() {
+            const savedTheme = localStorage.getItem('theme');
+            const savedLanguage = localStorage.getItem('language');
+            
+            if (savedTheme === 'dark') {
+                enableDarkMode();
+            }
+            
+            if (savedLanguage === 'en') {
+                currentLanguage = 'en';
+                updateLanguageButton();
+            }
+            
+            // لا نحفظ حالة تسجيل الدخول - يعود دائماً لصفحة تسجيل الدخول
+            showLoginSection();
+        }
+        
+        // تبديل الوضع الداكن
+        function toggleDarkMode() {
+            if (isDarkMode) {
+                disableDarkMode();
+            } else {
+                enableDarkMode();
+            }
+        }
+        
+        // تفعيل الوضع الداكن
+        function enableDarkMode() {
+            document.body.classList.add('dark-mode');
+            document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-sun"></i>';
+            isDarkMode = true;
+            localStorage.setItem('theme', 'dark');
+        }
+        
+        // تعطيل الوضع الداكن
+        function disableDarkMode() {
+            document.body.classList.remove('dark-mode');
+            document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-moon"></i>';
+            isDarkMode = false;
+            localStorage.setItem('theme', 'light');
+        }
+        
+        // تبديل اللغة
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar';
+            
+            // تغيير اتجاه النص
+            document.documentElement.setAttribute('dir', currentLanguage === 'ar' ? 'rtl' : 'ltr');
+            document.documentElement.setAttribute('lang', currentLanguage);
+            
+            // تحديث زر اللغة
+            updateLanguageButton();
+            
+            // تحديث الترجمات
+            updateTranslations();
+            
+            // إعادة تحميل المنتجات بلغة جديدة
+            loadProducts();
+            
+            localStorage.setItem('language', currentLanguage);
+        }
+        
+        // تحديث زر اللغة
+        function updateLanguageButton() {
+            document.getElementById('lang-text').textContent = 
+                currentLanguage === 'ar' ? 'EN' : 'AR';
+        }
+        
+        // الحصول على ترجمة
+        function getTranslation(key) {
+            return translations[currentLanguage][key] || key;
+        }
+        
+        // تحديث جميع الترجمات
+        function updateTranslations() {
+            // تحديث جميع النصوص
+            const elements = document.querySelectorAll('[id]');
+            elements.forEach(element => {
+                const id = element.id;
+                const key = id.replace(/-/g, '_');
+                if (translations[currentLanguage][key]) {
+                    element.textContent = getTranslation(key);
+                }
+            });
+            
+            // تحديث placeholders
+            document.getElementById('login-id').placeholder = 
+                currentLanguage === 'ar' ? 'أدخل رقم المستخدم فقط' : 'Enter user ID only';
+        }
+        
+        // تحديث خيارات select
+        function updateSelectOptions() {
+            const diceOptions = document.querySelectorAll('#dice-choice option');
+            diceOptions[0].textContent = getTranslation('even_option');
+            diceOptions[1].textContent = getTranslation('odd_option');
+            diceOptions[2].textContent = getTranslation('seven_option');
+            
+            const airplaneOptions = document.querySelectorAll('#airplane-choice option');
+            airplaneOptions[0].textContent = getTranslation('high_option');
+            airplaneOptions[1].textContent = getTranslation('low_option');
+        }
+        
+        // عرض إشعار
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // تسجيل الدخول - بالإيد فقط (بدون كلمة مرور)
+        async function loginUser() {
+            if (!isFirebaseConnected) {
+                showNotification(getTranslation('no_connection'), 'error');
+                return;
+            }
+            
+            const userId = document.getElementById('login-id').value.trim();
+            
+            if (!userId) {
+                showNotification(getTranslation('fill_fields'), 'error');
+                return;
+            }
+            
+            try {
+                console.log("🔍 جاري البحث عن المستخدم:", userId);
+                
+                // البحث عن المستخدم في قاعدة البيانات
+                const userRef = ref(database, 'users/' + userId);
+                const snapshot = await get(userRef);
+                
+                if (snapshot.exists()) {
+                    // المستخدم موجود - تسجيل الدخول
+                    const userData = snapshot.val();
+                    console.log("✅ المستخدم موجود:", userData);
+                    
+                    // حفظ بيانات المستخدم
+                    currentUserData = userData;
+                    currentUserId = userId;
+                    
+                    // 🔥 **الإضافة الجديدة: إضافة listener للتحديث الفوري**
+                    setupUserListener(userId);
+                    
+                    // تحديث الواجهة
+                    updateUserInterface();
+                    
+                    // عرض القسم الرئيسي
+                    showSection('main-section');
+                    showNotification(getTranslation('login_success'), 'success');
+                    
+                } else {
+                    // المستخدم غير موجود - إنشاء حساب جديد
+                    console.log("🆕 إنشاء حساب جديد للمستخدم:", userId);
+                    
+                    // إنشاء بيانات المستخدم الجديد
+                    const newUserData = {
+                        name: `مستخدم ${userId}`,
+                        money: 1000, // رصيد ابتدائي
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    // حفظ المستخدم الجديد في Firebase
+                    await set(userRef, newUserData);
+                    
+                    // حفظ بيانات المستخدم
+                    currentUserData = newUserData;
+                    currentUserId = userId;
+                    
+                    // 🔥 **الإضافة الجديدة: إضافة listener للتحديث الفوري**
+                    setupUserListener(userId);
+                    
+                    // تحديث الواجهة
+                    updateUserInterface();
+                    
+                    // عرض القسم الرئيسي
+                    showSection('main-section');
+                    showNotification(getTranslation('create_success'), 'success');
+                }
+                
+                // تنظيف الحقل
+                document.getElementById('login-id').value = '';
+                
+            } catch (error) {
+                console.error('❌ خطأ في تسجيل الدخول:', error);
+                showNotification(`خطأ: ${error.message}`, 'error');
+            }
+        }
+        
+        // 🔥 **وظيفة جديدة: إعداد listener للتحديث الفوري**
+        function setupUserListener(userId) {
+            // إزالة الـ listener السابق إذا كان موجوداً
+            if (userListener) {
+                userListener();
+                userListener = null;
+            }
+            
+            // إضافة listener جديد للتحديث الفوري
+            const userRef = ref(database, 'users/' + userId);
+            userListener = onValue(userRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    const updatedUserData = snapshot.val();
+                    currentUserData = updatedUserData;
+                    
+                    // تحديث الواجهة مباشرة
+                    updateUserInterface();
+                    
+                    console.log("✅ تم تحديث بيانات المستخدم مباشرة من Firebase:", updatedUserData);
+                } else {
+                    console.log("❌ المستخدم تم حذفه من Firebase");
+                    logoutUser();
+                }
+            });
+        }
+        
+        // تسجيل الخروج
+        function logoutUser() {
+            // إزالة الـ listener
+            if (userListener) {
+                userListener();
+                userListener = null;
+            }
+            
+            // إعادة تعيين المتغيرات
+            currentUserData = null;
+            currentUserId = null;
+            
+            // عرض قسم تسجيل الدخول
+            showLoginSection();
+            
+            showNotification(getTranslation('logout_success'), 'success');
+        }
+        
+        // تحديث واجهة المستخدم
+        function updateUserInterface() {
+            if (!currentUserData) return;
+            
+            document.getElementById('user-name').textContent = currentUserData.name || `مستخدم ${currentUserId}`;
+            document.getElementById('user-id-value').textContent = currentUserId || '-';
+            document.getElementById('store-id-value').textContent = currentUserId || '-';
+            document.getElementById('dice-id-value').textContent = currentUserId || '-';
+            document.getElementById('airplane-id-value').textContent = currentUserId || '-';
+            
+            const money = currentUserData.money || 0;
+            document.getElementById('user-money').textContent = money;
+            document.getElementById('store-money').textContent = money;
+            document.getElementById('dice-money').textContent = money;
+            document.getElementById('airplane-money').textContent = money;
+            
+            console.log("✅ تم تحديث الواجهة للمستخدم:", currentUserData);
+        }
+        
+        // تحديث الرصيد في Firebase
+        async function updateUserMoney(newMoney) {
+            if (!currentUserData || !isFirebaseConnected || !currentUserId) return;
+            
+            try {
+                console.log("💰 جاري تحديث الرصيد:", newMoney);
+                
+                // تحديث الرصيد في Firebase مباشرة
+                const userRef = ref(database, 'users/' + currentUserId);
+                await update(userRef, {
+                    money: newMoney
+                });
+                
+                // لا نحتاج لتحديث البيانات المحلية لأن الـ listener سيفعل ذلك تلقائياً
+                console.log("✅ تم تحديث الرصيد بنجاح في Firebase");
+                
+            } catch (error) {
+                console.error('❌ خطأ في تحديث الرصيد:', error);
+                showNotification(getTranslation('db_error'), 'error');
+            }
+        }
+        
+        // عرض قسم معين
+        function showSection(sectionId) {
+            // إخفاء جميع الأقسام
+            const sections = ['login-section', 'main-section', 'store-section', 'dice-game', 'airplane-game'];
+            sections.forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
+            
+            // عرض القسم المطلوب
+            document.getElementById(sectionId).style.display = 'block';
+        }
+        
+        // عرض قسم تسجيل الدخول
+        function showLoginSection() {
+            showSection('login-section');
+            currentUserData = null;
+            currentUserId = null;
+            
+            // تنظيف الحقول
+            document.getElementById('login-id').value = '';
+        }
+        
+        // تحميل المنتجات
+        function loadProducts() {
+            const products = [
+                { icon: "🥃", name: "whisky", price: 120, desc: currentLanguage === 'ar' ? 'ويسكي اسكتلندي أصلي' : 'Original Scotch whisky' },
+                { icon: "🍷", name: "wine", price: 85, desc: currentLanguage === 'ar' ? 'نبيذ أحمر فرنسي' : 'French red wine' },
+                { icon: "🍺", name: "beer", price: 15, desc: currentLanguage === 'ar' ? 'بيرة طازجة من البرميل' : 'Fresh beer from the barrel' },
+                { icon: "🍸", name: "martini", price: 25, desc: currentLanguage === 'ar' ? 'كوكتيل مارتيني كلاسيكي' : 'Classic martini cocktail' },
+                { icon: "🍾", name: "champagne", price: 200, desc: currentLanguage === 'ar' ? 'شامبانيا فرنسية فاخرة' : 'Luxury French champagne' },
+                { icon: "🍹", name: "mojito", price: 20, desc: currentLanguage === 'ar' ? 'كوكتيل موخيتو منعش' : 'Refreshing mojito cocktail' }
+            ];
+            
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+            
+            products.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <div class="product-info">
+                        <div class="product-icon">${product.icon}</div>
+                        <div>
+                            <h4 style="margin-bottom: 5px; font-size: 16px;">${getTranslation(product.name)}</h4>
+                            <p style="color: #666; font-size: 13px;">${product.desc}</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="product-price">$${product.price}</div>
+                        <button class="btn-success" style="margin-top: 10px; padding: 7px 12px; font-size: 13px;" 
+                                data-product="${product.name}" data-price="${product.price}">
+                            ${getTranslation('buy_btn')}
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(productItem);
+                
+                // إضافة مستمع الحدث لزر الشراء
+                const buyBtn = productItem.querySelector('button');
+                buyBtn.addEventListener('click', function() {
+                    buyProduct(product.name, product.price);
+                });
+            });
+        }
+        
+        // شراء منتج
+        async function buyProduct(productName, price) {
+            if (!currentUserData) return;
+            
+            if (price > currentUserData.money) {
+                showNotification(getTranslation('insufficient_balance'), 'error');
+                return;
+            }
+            
+            const newMoney = currentUserData.money - price;
+            await updateUserMoney(newMoney);
+            
+            showNotification(`${getTranslation('purchase_success')} ${getTranslation(productName)}!`, 'success');
+        }
+        
+        // لعبة النرد
+        async function playDice() {
+            if (!currentUserData) return;
+            
+            const betAmount = parseInt(document.getElementById('bet-amount-dice').value);
+            const choice = document.getElementById('dice-choice').value;
+            
+            if (betAmount > currentUserData.money) {
+                showNotification(getTranslation('insufficient_balance'), 'error');
+                return;
+            }
+            
+            // تأثير الهز للنرد
+            const dice1 = document.getElementById('dice1');
+            const dice2 = document.getElementById('dice2');
+            
+            dice1.classList.add('rolling');
+            dice2.classList.add('rolling');
+            
+            document.getElementById('play-dice').disabled = true;
+            
+            setTimeout(async () => {
+                const dice1Value = Math.floor(Math.random() * 6) + 1;
+                const dice2Value = Math.floor(Math.random() * 6) + 1;
+                const sum = dice1Value + dice2Value;
+                
+                dice1.textContent = dice1Value;
+                dice2.textContent = dice2Value;
+                
+                dice1.classList.remove('rolling');
+                dice2.classList.remove('rolling');
+                
+                document.getElementById('play-dice').disabled = false;
+                
+                let win = false;
+                let multiplier = 1;
+                
+                if (choice === 'even' && sum % 2 === 0) {
+                    win = true;
+                    multiplier = 2;
+                } else if (choice === 'odd' && sum % 2 !== 0) {
+                    win = true;
+                    multiplier = 2;
+                } else if (choice === '7' && sum === 7) {
+                    win = true;
+                    multiplier = 4;
+                }
+                
+                let newMoney;
+                if (win) {
+                    const winAmount = betAmount * multiplier;
+                    newMoney = currentUserData.money + winAmount;
+                    showNotification(`${getTranslation('win')} $${winAmount}!`, 'success');
+                } else {
+                    newMoney = currentUserData.money - betAmount;
+                    showNotification(`${getTranslation('lose')} $${betAmount}`, 'error');
+                }
+                
+                await updateUserMoney(newMoney);
+                
+            }, 1000);
+        }
+        
+        // لعبة الطائرة
+        async function playAirplane() {
+            if (!currentUserData) return;
+            
+            const betAmount = parseInt(document.getElementById('bet-amount-airplane').value);
+            const choice = document.getElementById('airplane-choice').value;
+            
+            if (betAmount > currentUserData.money) {
+                showNotification(getTranslation('insufficient_balance'), 'error');
+                return;
+            }
+            
+            const airplane = document.getElementById('airplane');
+            airplane.style.top = '45px';
+            
+            document.getElementById('play-airplane').disabled = true;
+            
+            const result = Math.random() > 0.5 ? 'up' : 'down';
+            
+            setTimeout(async () => {
+                if (result === 'up') {
+                    airplane.style.top = '15px';
+                } else {
+                    airplane.style.top = '85px';
+                }
+                
+                setTimeout(async () => {
+                    document.getElementById('play-airplane').disabled = false;
+                    
+                    const win = choice === result;
+                    
+                    let newMoney;
+                    if (win) {
+                        const winAmount = betAmount * 2;
+                        newMoney = currentUserData.money + winAmount;
+                        showNotification(`${getTranslation('win')} $${winAmount}!`, 'success');
+                    } else {
+                        newMoney = currentUserData.money - betAmount;
+                        showNotification(`${getTranslation('lose')} $${betAmount}`, 'error');
+                    }
+                    
+                    await updateUserMoney(newMoney);
+                }, 600);
+            }, 100);
+        }
+    </script>
+</body>
+</html>

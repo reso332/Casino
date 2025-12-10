@@ -7,17 +7,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #e74c3c;
+            --header-color: #6c757d;
+            --bg-color: #ffffff;
+            --card-bg: #f8f9fa;
+            --text-color: #2c3e50;
             --accent-color: #3498db;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
-            --success-color: #2ecc71;
-            --warning-color: #f39c12;
+            --success-color: #27ae60;
             --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --border-color: #dee2e6;
+        }
+        
+        .dark-mode {
+            --header-color: #2c3e50;
             --bg-color: #1a2530;
-            --card-bg: rgba(255, 255, 255, 0.1);
+            --card-bg: #2c3e50;
             --text-color: #ecf0f1;
+            --accent-color: #3498db;
+            --success-color: #2ecc71;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --border-color: #34495e;
         }
         
         * {
@@ -28,13 +38,14 @@
         }
         
         body {
-            background: linear-gradient(135deg, var(--bg-color), #1a1a2e);
+            background-color: var(--bg-color);
             color: var(--text-color);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            transition: all 0.3s ease;
         }
         
         .container {
@@ -43,19 +54,20 @@
             margin: 0 auto;
         }
         
-        .logo-container {
-            text-align: center;
-            margin-bottom: 30px;
+        .header {
+            background-color: var(--header-color);
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            gap: 15px;
+            color: white;
+            margin-bottom: 0;
         }
         
         .logo {
-            font-size: 36px;
+            font-size: 24px;
             font-weight: bold;
-            color: var(--light-color);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -63,48 +75,49 @@
         }
         
         .logo i {
-            color: var(--accent-color);
-            font-size: 40px;
+            color: white;
+            font-size: 28px;
         }
         
-        .language-switcher {
-            background: var(--accent-color);
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            font-size: 18px;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
             transition: all 0.3s ease;
         }
         
-        .language-switcher:hover {
-            background: var(--primary-color);
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
             transform: scale(1.1);
         }
         
         .section {
             background-color: var(--card-bg);
-            border-radius: 15px;
+            border-radius: 0 0 15px 15px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
         }
         
         .section-title {
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 25px;
-            color: var(--accent-color);
+            color: var(--text-color);
             text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            font-weight: 600;
         }
         
         .form-group {
@@ -114,23 +127,22 @@
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
-            color: var(--light-color);
+            font-weight: 600;
+            color: var(--text-color);
         }
         
-        input, select {
+        input {
             width: 100%;
             padding: 14px;
-            border: none;
+            border: 2px solid var(--border-color);
             border-radius: 8px;
-            background-color: rgba(255, 255, 255, 0.9);
-            color: var(--dark-color);
+            background-color: white;
+            color: #2c3e50;
             font-size: 16px;
-            border: 2px solid transparent;
             transition: border-color 0.3s ease;
         }
         
-        input:focus, select:focus {
+        input:focus {
             outline: none;
             border-color: var(--accent-color);
         }
@@ -139,19 +151,20 @@
             background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 14px 25px;
+            padding: 14px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 600;
             transition: all 0.3s ease;
             width: 100%;
             margin-top: 10px;
         }
         
         button:hover {
-            background-color: var(--primary-color);
+            background-color: #2980b9;
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         
         .btn-success {
@@ -159,7 +172,7 @@
         }
         
         .btn-success:hover {
-            background-color: #27ae60;
+            background-color: #219653;
         }
         
         .btn-danger {
@@ -175,11 +188,12 @@
         }
         
         .card {
-            background: linear-gradient(145deg, var(--primary-color), var(--dark-color));
-            border-radius: 12px;
+            background-color: white;
+            border-radius: 10px;
             padding: 20px;
             margin: 15px 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
         }
         
         .user-info {
@@ -202,18 +216,19 @@
         }
         
         .game {
-            background: linear-gradient(145deg, var(--primary-color), var(--dark-color));
+            background-color: white;
             border-radius: 10px;
             padding: 20px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
         }
         
         .game:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .game i {
@@ -242,9 +257,10 @@
             justify-content: center;
             align-items: center;
             font-size: 32px;
-            color: var(--dark-color);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            color: #2c3e50;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             font-weight: bold;
+            border: 1px solid var(--border-color);
         }
         
         .rolling {
@@ -263,9 +279,10 @@
             height: 150px;
             position: relative;
             margin: 25px 0;
-            background: linear-gradient(to bottom, #3498db, #2c3e50);
+            background: linear-gradient(to bottom, var(--accent-color), var(--header-color));
             border-radius: 10px;
             overflow: hidden;
+            border: 1px solid var(--border-color);
         }
         
         .airplane {
@@ -310,18 +327,13 @@
             margin-top: 20px;
         }
         
-        .back-btn {
-            background: var(--warning-color);
-            margin-top: 10px;
-        }
-        
         .header-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 2px solid var(--border-color);
         }
         
         .nav-buttons {
@@ -335,13 +347,59 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
+            color: white;
+            border: none;
         }
         
         .user-display {
             display: flex;
             align-items: center;
             gap: 10px;
-            color: var(--light-color);
+            color: var(--text-color);
+            font-weight: 600;
+        }
+        
+        select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background-color: white;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+        
+        .products-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .product-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+        }
+        
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .product-icon {
+            font-size: 32px;
+        }
+        
+        .product-price {
+            color: var(--success-color);
+            font-weight: bold;
+            font-size: 20px;
         }
         
         @media (max-width: 480px) {
@@ -368,13 +426,20 @@
     <div class="notification" id="notification"></div>
     
     <div class="container">
-        <!-- شعار وتغيير اللغة -->
-        <div class="logo-container">
+        <!-- الهيدر -->
+        <div class="header">
             <div class="logo" id="app-logo">
                 <i class="fas fa-dice"></i>
                 <span id="app-title">Blosfet Casino</span>
             </div>
-            <button class="language-switcher" id="language-switcher">EN</button>
+            <div class="controls">
+                <button class="control-btn" id="theme-toggle" title="تبديل الوضع">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="control-btn" id="language-toggle" title="تغيير اللغة">
+                    <span id="lang-text">EN</span>
+                </button>
+            </div>
         </div>
 
         <!-- قسم تسجيل الدخول -->
@@ -394,24 +459,16 @@
                 <input type="password" id="login-password" placeholder="أدخل كلمة المرور">
             </div>
             
-            <div class="form-group">
-                <label for="login-age" id="age-label">العمر:</label>
-                <select id="login-age">
-                    <option value="">اختر عمرك</option>
-                    <!-- سيتم إضافة الخيارات عبر JavaScript -->
-                </select>
-            </div>
-            
             <button id="login-btn">
                 <i class="fas fa-sign-in-alt"></i>
                 <span id="login-btn-text">تسجيل الدخول</span>
             </button>
             
-            <div class="card" style="margin-top: 20px; display: none;" id="age-warning">
+            <div class="card" style="margin-top: 20px; display: none;" id="error-message">
                 <div style="text-align: center; color: var(--danger-color);">
-                    <i class="fas fa-exclamation-triangle" style="font-size: 40px; margin-bottom: 10px;"></i>
-                    <h3 id="warning-title">عذرًا، عمرك غير مستوفٍ لشروط الرهان</h3>
-                    <p id="warning-text">يجب أن يكون عمرك 18 سنة أو أكثر للمشاركة في ألعاب الرهان</p>
+                    <i class="fas fa-exclamation-triangle" style="font-size: 32px; margin-bottom: 10px;"></i>
+                    <h3 id="error-title">خطأ في الاتصال</h3>
+                    <p id="error-text">تعذر الاتصال بقاعدة البيانات. يرجى المحاولة لاحقًا.</p>
                 </div>
             </div>
         </div>
@@ -420,14 +477,14 @@
         <div class="section main-section" id="main-section">
             <div class="header-nav">
                 <div class="user-display">
-                    <i class="fas fa-user-circle" style="font-size: 24px;"></i>
+                    <i class="fas fa-user-circle" style="font-size: 24px; color: var(--accent-color);"></i>
                     <span id="user-name">المستخدم</span>
                 </div>
                 <div class="nav-buttons">
-                    <div class="nav-btn" id="store-btn">
+                    <button class="nav-btn" id="store-btn">
                         <i class="fas fa-store"></i>
                         <span id="store-text">المتجر</span>
-                    </div>
+                    </button>
                 </div>
             </div>
             
@@ -435,7 +492,7 @@
                 <div class="user-info">
                     <div>
                         <h3 id="balance-label">رصيدك الحالي</h3>
-                        <p id="user-email"></p>
+                        <p id="user-email" style="color: #666; font-size: 14px;"></p>
                     </div>
                     <div class="balance">
                         $<span id="user-balance">0</span>
@@ -443,18 +500,18 @@
                 </div>
             </div>
             
-            <h3 style="margin: 20px 0 15px 0; text-align: center;" id="games-label">الألعاب المتاحة</h3>
+            <h3 style="margin: 20px 0 15px 0; text-align: center; color: var(--text-color);" id="games-label">الألعاب المتاحة</h3>
             
             <div class="game-container">
                 <div class="game" id="dice-game-btn">
                     <i class="fas fa-dice"></i>
                     <h4 id="dice-game-title">لعبة النرد</h4>
-                    <p id="dice-game-desc">الرهان على نتيجة النرد</p>
+                    <p id="dice-game-desc" style="color: #666; font-size: 14px;">الرهان على نتيجة النرد</p>
                 </div>
                 <div class="game" id="airplane-game-btn">
                     <i class="fas fa-plane"></i>
                     <h4 id="airplane-game-title">لعبة الطائرة</h4>
-                    <p id="airplane-game-desc">الرهان على تحليق الطائرة</p>
+                    <p id="airplane-game-desc" style="color: #666; font-size: 14px;">الرهان على تحليق الطائرة</p>
                 </div>
             </div>
             
@@ -468,14 +525,14 @@
         <div class="section main-section" id="store-section">
             <div class="header-nav">
                 <div class="user-display">
-                    <i class="fas fa-store"></i>
+                    <i class="fas fa-store" style="color: var(--accent-color);"></i>
                     <span id="store-title">المتجر</span>
                 </div>
                 <div class="nav-buttons">
-                    <div class="nav-btn" id="back-to-main">
+                    <button class="nav-btn" id="back-to-main">
                         <i class="fas fa-arrow-right"></i>
                         <span id="back-text">رجوع</span>
-                    </div>
+                    </button>
                 </div>
             </div>
             
@@ -490,7 +547,7 @@
                 </div>
             </div>
             
-            <div id="products-container">
+            <div class="products-grid" id="products-container">
                 <!-- المنتجات ستضاف عبر JavaScript -->
             </div>
         </div>
@@ -499,14 +556,14 @@
         <div class="section dice-game main-section" id="dice-game">
             <div class="header-nav">
                 <div class="user-display">
-                    <i class="fas fa-dice"></i>
+                    <i class="fas fa-dice" style="color: var(--accent-color);"></i>
                     <span id="dice-title">لعبة النرد</span>
                 </div>
                 <div class="nav-buttons">
-                    <div class="nav-btn" id="back-from-dice">
+                    <button class="nav-btn" id="back-from-dice">
                         <i class="fas fa-arrow-right"></i>
                         <span>رجوع</span>
-                    </div>
+                    </button>
                 </div>
             </div>
             
@@ -550,14 +607,14 @@
         <div class="section airplane-game main-section" id="airplane-game">
             <div class="header-nav">
                 <div class="user-display">
-                    <i class="fas fa-plane"></i>
+                    <i class="fas fa-plane" style="color: var(--accent-color);"></i>
                     <span id="airplane-title">لعبة الطائرة</span>
                 </div>
                 <div class="nav-buttons">
-                    <div class="nav-btn" id="back-from-airplane">
+                    <button class="nav-btn" id="back-from-airplane">
                         <i class="fas fa-arrow-right"></i>
                         <span>رجوع</span>
-                    </div>
+                    </button>
                 </div>
             </div>
             
@@ -596,14 +653,14 @@
         </div>
     </div>
 
-    <!-- Import Firebase -->
+    <!-- Firebase SDK -->
     <script type="module">
         // Import Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
         import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
         
-        // Firebase configuration
+        // Firebase configuration - نفس الإعدادات التي أعطيتني إياها
         const firebaseConfig = {
             apiKey: "AIzaSyAKGrxv_GT3T3krYeYY5C-o7VmvLkG-gw0",
             authDomain: "cashapp-405b7.firebaseapp.com",
@@ -616,13 +673,24 @@
         };
         
         // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const database = getDatabase(app);
+        let app;
+        let auth;
+        let database;
+        
+        try {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            database = getDatabase(app);
+            console.log("✅ Firebase connected successfully!");
+        } catch (error) {
+            console.error("❌ Firebase connection error:", error);
+            document.getElementById('error-message').style.display = 'block';
+        }
         
         // البيانات
         let currentUserData = null;
         let currentLanguage = 'ar';
+        let isDarkMode = false;
         
         // الترجمات
         const translations = {
@@ -632,10 +700,7 @@
                 "login_title": "تسجيل الدخول",
                 "email_label": "البريد الإلكتروني:",
                 "password_label": "كلمة المرور:",
-                "age_label": "العمر:",
                 "login_btn": "تسجيل الدخول",
-                "warning_title": "عذرًا، عمرك غير مستوفٍ لشروط الرهان",
-                "warning_text": "يجب أن يكون عمرك 18 سنة أو أكثر للمشاركة في ألعاب الرهان",
                 
                 // القسم الرئيسي
                 "balance_label": "رصيدك الحالي",
@@ -684,12 +749,13 @@
                 "login_success": "تم تسجيل الدخول بنجاح!",
                 "logout_success": "تم تسجيل الخروج بنجاح",
                 "fill_fields": "يرجى ملء جميع الحقول",
-                "invalid_age": "يجب أن يكون عمرك 18 سنة أو أكثر",
-                "user_not_found": "المستخدم غير موجود في قاعدة البيانات",
+                "user_not_found": "المستخدم غير موجود",
+                "wrong_password": "كلمة المرور خاطئة",
                 "insufficient_balance": "رصيدك غير كافٍ",
                 "purchase_success": "تم الشراء بنجاح!",
                 "win": "مبروك! لقد فزت",
-                "lose": "للأسف! لقد خسرت"
+                "lose": "للأسف! لقد خسرت",
+                "db_error": "خطأ في قاعدة البيانات"
             },
             en: {
                 // General texts
@@ -697,10 +763,7 @@
                 "login_title": "Login",
                 "email_label": "Email:",
                 "password_label": "Password:",
-                "age_label": "Age:",
                 "login_btn": "Login",
-                "warning_title": "Sorry, your age doesn't meet betting requirements",
-                "warning_text": "You must be 18 years or older to participate in betting games",
                 
                 // Main section
                 "balance_label": "Your Balance",
@@ -749,37 +812,36 @@
                 "login_success": "Logged in successfully!",
                 "logout_success": "Logged out successfully",
                 "fill_fields": "Please fill all fields",
-                "invalid_age": "You must be 18 years or older",
-                "user_not_found": "User not found in database",
+                "user_not_found": "User not found",
+                "wrong_password": "Wrong password",
                 "insufficient_balance": "Insufficient balance",
                 "purchase_success": "Purchase successful!",
                 "win": "Congratulations! You won",
-                "lose": "Sorry! You lost"
+                "lose": "Sorry! You lost",
+                "db_error": "Database error"
             }
         };
         
         // تهيئة الصفحة
         document.addEventListener('DOMContentLoaded', function() {
-            // تعبئة خيارات العمر
-            const ageSelect = document.getElementById('login-age');
-            for (let i = 18; i <= 100; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i;
-                ageSelect.appendChild(option);
-            }
-            
             // إعداد event listeners
             setupEventListeners();
             
-            // مراقبة حالة المصادقة
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    loadUserData(user.uid);
-                } else {
-                    showLoginSection();
-                }
-            });
+            // تحميل الإعدادات من التخزين المحلي
+            loadSettings();
+            
+            // إذا كان Firebase متصل، مراقبة حالة المصادقة
+            if (auth) {
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        console.log("👤 User authenticated:", user.email);
+                        loadUserData(user.uid);
+                    } else {
+                        console.log("👤 No user logged in");
+                        showLoginSection();
+                    }
+                });
+            }
             
             // تحميل المنتجات
             loadProducts();
@@ -790,8 +852,11 @@
         
         // إعداد مستمعي الأحداث
         function setupEventListeners() {
-            // تغيير اللغة
-            document.getElementById('language-switcher').addEventListener('click', toggleLanguage);
+            // تبديل الوضع الداكن
+            document.getElementById('theme-toggle').addEventListener('click', toggleDarkMode);
+            
+            // تبديل اللغة
+            document.getElementById('language-toggle').addEventListener('click', toggleLanguage);
             
             // تسجيل الدخول
             document.getElementById('login-btn').addEventListener('click', loginUser);
@@ -810,6 +875,70 @@
             // الألعاب
             document.getElementById('play-dice').addEventListener('click', playDice);
             document.getElementById('play-airplane').addEventListener('click', playAirplane);
+            
+            // اختبار اتصال Firebase
+            document.getElementById('app-logo').addEventListener('dblclick', testFirebaseConnection);
+        }
+        
+        // اختبار اتصال Firebase
+        function testFirebaseConnection() {
+            if (!database) {
+                showNotification(getTranslation('db_error'), 'error');
+                return;
+            }
+            
+            try {
+                const testRef = ref(database, 'test');
+                get(testRef).then(() => {
+                    showNotification('✅ قاعدة البيانات متصلة بنجاح', 'success');
+                }).catch(error => {
+                    showNotification('❌ خطأ في الاتصال بقاعدة البيانات', 'error');
+                    console.error("Firebase test error:", error);
+                });
+            } catch (error) {
+                showNotification('❌ خطأ في الاتصال', 'error');
+                console.error("Firebase test error:", error);
+            }
+        }
+        
+        // تحميل الإعدادات
+        function loadSettings() {
+            const savedTheme = localStorage.getItem('theme');
+            const savedLanguage = localStorage.getItem('language');
+            
+            if (savedTheme === 'dark') {
+                enableDarkMode();
+            }
+            
+            if (savedLanguage === 'en') {
+                currentLanguage = 'en';
+                updateLanguageButton();
+            }
+        }
+        
+        // تبديل الوضع الداكن
+        function toggleDarkMode() {
+            if (isDarkMode) {
+                disableDarkMode();
+            } else {
+                enableDarkMode();
+            }
+        }
+        
+        // تفعيل الوضع الداكن
+        function enableDarkMode() {
+            document.body.classList.add('dark-mode');
+            document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-sun"></i>';
+            isDarkMode = true;
+            localStorage.setItem('theme', 'dark');
+        }
+        
+        // تعطيل الوضع الداكن
+        function disableDarkMode() {
+            document.body.classList.remove('dark-mode');
+            document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-moon"></i>';
+            isDarkMode = false;
+            localStorage.setItem('theme', 'light');
         }
         
         // تبديل اللغة
@@ -820,12 +949,22 @@
             document.documentElement.setAttribute('dir', currentLanguage === 'ar' ? 'rtl' : 'ltr');
             document.documentElement.setAttribute('lang', currentLanguage);
             
-            // تغيير نص زر اللغة
-            document.getElementById('language-switcher').textContent = 
-                currentLanguage === 'ar' ? 'EN' : 'AR';
+            // تحديث زر اللغة
+            updateLanguageButton();
             
             // تحديث الترجمات
             updateTranslations();
+            
+            // إعادة تحميل المنتجات بلغة جديدة
+            loadProducts();
+            
+            localStorage.setItem('language', currentLanguage);
+        }
+        
+        // تحديث زر اللغة
+        function updateLanguageButton() {
+            document.getElementById('lang-text').textContent = 
+                currentLanguage === 'ar' ? 'EN' : 'AR';
         }
         
         // الحصول على ترجمة
@@ -835,32 +974,36 @@
         
         // تحديث جميع الترجمات
         function updateTranslations() {
-            // تحديث جميع العناصر التي لها data-i18n أو id
+            // تحديث جميع النصوص
             const elements = document.querySelectorAll('[id]');
             elements.forEach(element => {
                 const id = element.id;
-                if (id.startsWith('app-') || id.includes('label') || id.includes('title') || 
-                    id.includes('text') || id.includes('btn') || id.includes('option') || 
-                    id.includes('desc')) {
-                    const key = id.replace(/-/g, '_');
-                    if (translations[currentLanguage][key]) {
-                        element.textContent = getTranslation(key);
-                    }
+                const key = id.replace(/-/g, '_');
+                if (translations[currentLanguage][key]) {
+                    element.textContent = getTranslation(key);
                 }
             });
             
             // تحديث placeholders
-            const placeholders = {
-                'login-email': getTranslation('email_label').replace(':', ''),
-                'login-password': getTranslation('password_label').replace(':', '')
-            };
+            document.getElementById('login-email').placeholder = 
+                currentLanguage === 'ar' ? 'أدخل بريدك الإلكتروني' : 'Enter your email';
+            document.getElementById('login-password').placeholder = 
+                currentLanguage === 'ar' ? 'أدخل كلمة المرور' : 'Enter your password';
             
-            for (const id in placeholders) {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.placeholder = placeholders[id];
-                }
-            }
+            // تحديث خيارات select
+            updateSelectOptions();
+        }
+        
+        // تحديث خيارات select
+        function updateSelectOptions() {
+            const diceOptions = document.querySelectorAll('#dice-choice option');
+            diceOptions[0].textContent = getTranslation('even_option');
+            diceOptions[1].textContent = getTranslation('odd_option');
+            diceOptions[2].textContent = getTranslation('seven_option');
+            
+            const airplaneOptions = document.querySelectorAll('#airplane-choice option');
+            airplaneOptions[0].textContent = getTranslation('high_option');
+            airplaneOptions[1].textContent = getTranslation('low_option');
         }
         
         // عرض إشعار
@@ -879,15 +1022,14 @@
         async function loginUser() {
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-            const age = parseInt(document.getElementById('login-age').value);
             
-            if (!email || !password || !age) {
+            if (!email || !password) {
                 showNotification(getTranslation('fill_fields'), 'error');
                 return;
             }
             
-            if (age < 18) {
-                document.getElementById('age-warning').style.display = 'block';
+            if (!auth) {
+                showNotification(getTranslation('db_error'), 'error');
                 return;
             }
             
@@ -895,38 +1037,48 @@
                 // تسجيل الدخول باستخدام Firebase Authentication
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
-                
-                // التحقق من وجود المستخدم في قاعدة البيانات
-                const userRef = ref(database, 'users/' + user.uid);
-                const snapshot = await get(userRef);
-                
-                if (!snapshot.exists()) {
-                    showNotification(getTranslation('user_not_found'), 'error');
-                    await auth.signOut();
-                    return;
-                }
-                
-                showNotification(getTranslation('login_success'), 'success');
+                console.log("✅ Login successful:", user.email);
                 
             } catch (error) {
                 console.error('Login error:', error);
-                showNotification(error.message, 'error');
+                
+                // عرض رسالة خطأ مناسبة
+                let errorMessage = getTranslation('db_error');
+                if (error.code === 'auth/user-not-found') {
+                    errorMessage = getTranslation('user_not_found');
+                } else if (error.code === 'auth/wrong-password') {
+                    errorMessage = getTranslation('wrong_password');
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = currentLanguage === 'ar' ? 'البريد الإلكتروني غير صحيح' : 'Invalid email';
+                }
+                
+                showNotification(errorMessage, 'error');
             }
         }
         
         // تسجيل الخروج
         async function logoutUser() {
+            if (!auth) {
+                showNotification(getTranslation('db_error'), 'error');
+                return;
+            }
+            
             try {
                 await signOut(auth);
                 showNotification(getTranslation('logout_success'), 'success');
             } catch (error) {
                 console.error('Logout error:', error);
-                showNotification(error.message, 'error');
+                showNotification(getTranslation('db_error'), 'error');
             }
         }
         
         // تحميل بيانات المستخدم
         async function loadUserData(userId) {
+            if (!database) {
+                showNotification(getTranslation('db_error'), 'error');
+                return;
+            }
+            
             try {
                 const userRef = ref(database, 'users/' + userId);
                 const snapshot = await get(userRef);
@@ -938,29 +1090,32 @@
                     // تحديث الواجهة
                     document.getElementById('user-name').textContent = currentUserData.username || currentUserData.email.split('@')[0];
                     document.getElementById('user-email').textContent = currentUserData.email;
-                    document.getElementById('user-balance').textContent = currentUserData.balance || 0;
-                    document.getElementById('store-balance').textContent = currentUserData.balance || 0;
-                    document.getElementById('dice-balance').textContent = currentUserData.balance || 0;
-                    document.getElementById('airplane-balance').textContent = currentUserData.balance || 0;
+                    const balance = currentUserData.balance || 0;
+                    document.getElementById('user-balance').textContent = balance;
+                    document.getElementById('store-balance').textContent = balance;
+                    document.getElementById('dice-balance').textContent = balance;
+                    document.getElementById('airplane-balance').textContent = balance;
                     
-                    // إخفاء التحذير إن كان ظاهرًا
-                    document.getElementById('age-warning').style.display = 'none';
+                    // إخفاء رسالة الخطأ إن كانت ظاهرة
+                    document.getElementById('error-message').style.display = 'none';
                     
                     // عرض القسم الرئيسي
                     showSection('main-section');
+                    showNotification(getTranslation('login_success'), 'success');
                     
                 } else {
                     showNotification(getTranslation('user_not_found'), 'error');
-                    await auth.signOut();
+                    await signOut(auth);
                 }
             } catch (error) {
                 console.error('Error loading user data:', error);
+                showNotification(getTranslation('db_error'), 'error');
             }
         }
         
         // تحديث الرصيد في Firebase
         async function updateUserBalance(newBalance) {
-            if (!currentUserData) return;
+            if (!currentUserData || !database) return;
             
             try {
                 await update(ref(database, 'users/' + currentUserData.uid), {
@@ -977,6 +1132,7 @@
                 
             } catch (error) {
                 console.error('Error updating balance:', error);
+                showNotification(getTranslation('db_error'), 'error');
             }
         }
         
@@ -1000,8 +1156,6 @@
             // تنظيف الحقول
             document.getElementById('login-email').value = '';
             document.getElementById('login-password').value = '';
-            document.getElementById('login-age').value = '';
-            document.getElementById('age-warning').style.display = 'none';
         }
         
         // تحميل المنتجات
@@ -1012,40 +1166,36 @@
                 { icon: "🍺", name: "beer", price: 15, desc: currentLanguage === 'ar' ? 'بيرة طازجة من البرميل' : 'Fresh beer from the barrel' },
                 { icon: "🍸", name: "martini", price: 25, desc: currentLanguage === 'ar' ? 'كوكتيل مارتيني كلاسيكي' : 'Classic martini cocktail' },
                 { icon: "🍾", name: "champagne", price: 200, desc: currentLanguage === 'ar' ? 'شامبانيا فرنسية فاخرة' : 'Luxury French champagne' },
-                { icon: "🍹", name: "mojito", price: 20, desc: currentLanguage === 'ar' ? 'كوكتيل موخيتو منعش' : 'Refreshing mojito cocktail' },
-                { icon: "🥃", name: "bourbon", price: 95, desc: currentLanguage === 'ar' ? 'ويسكي بوربون أمريكي' : 'American bourbon whisky' },
-                { icon: "🍸", name: "margarita", price: 22, desc: currentLanguage === 'ar' ? 'كوكتيل مارجريتا تقليدي' : 'Traditional margarita cocktail' }
+                { icon: "🍹", name: "mojito", price: 20, desc: currentLanguage === 'ar' ? 'كوكتيل موخيتو منعش' : 'Refreshing mojito cocktail' }
             ];
             
             const container = document.getElementById('products-container');
             container.innerHTML = '';
             
             products.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'card';
-                productCard.innerHTML = `
-                    <div style="display: flex; align-items: center; justify-content: space-between;">
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <div style="font-size: 32px;">${product.icon}</div>
-                            <div>
-                                <h4 style="margin-bottom: 5px;">${getTranslation(product.name)}</h4>
-                                <p style="color: #aaa; font-size: 14px;">${product.desc}</p>
-                            </div>
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <div class="product-info">
+                        <div class="product-icon">${product.icon}</div>
+                        <div>
+                            <h4 style="margin-bottom: 5px;">${getTranslation(product.name)}</h4>
+                            <p style="color: #666; font-size: 14px;">${product.desc}</p>
                         </div>
-                        <div style="text-align: right;">
-                            <div class="balance" style="font-size: 20px;">$${product.price}</div>
-                            <button class="btn-success" style="margin-top: 10px; padding: 8px 15px; font-size: 14px;" 
-                                    data-product="${product.name}" data-price="${product.price}">
-                                ${getTranslation('buy_btn')}
-                            </button>
-                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="product-price">$${product.price}</div>
+                        <button class="btn-success" style="margin-top: 10px; padding: 8px 15px; font-size: 14px;" 
+                                data-product="${product.name}" data-price="${product.price}">
+                            ${getTranslation('buy_btn')}
+                        </button>
                     </div>
                 `;
                 
-                container.appendChild(productCard);
+                container.appendChild(productItem);
                 
                 // إضافة مستمع الحدث لزر الشراء
-                const buyBtn = productCard.querySelector('button');
+                const buyBtn = productItem.querySelector('button');
                 buyBtn.addEventListener('click', function() {
                     buyProduct(product.name, product.price);
                 });

@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>تسجيل دخول مستخدم</title>
+  <meta charset="UTF-8">
+  <title>تسجيل دخول</title>
   <style>
-    body { font-family: Arial; padding: 20px; background: #f3f3f3; }
-    .box { background: white; padding: 20px; width: 300px; margin: auto; border-radius: 10px; }
-    input { width: 100%; padding: 10px; margin-top: 10px; }
-    button { padding: 10px; width: 100%; margin-top: 20px; cursor: pointer; }
-    #result { margin-top: 20px; padding: 10px; background: #eee; border-radius: 5px; }
+    body { font-family: Arial; padding: 20px; background: #eee; }
+    .box { width: 320px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
+    input, button { width: 100%; padding: 12px; margin-top: 10px; }
+    #result { margin-top: 15px; }
   </style>
 </head>
 
@@ -17,8 +16,8 @@
 <div class="box">
   <h2>تسجيل دخول</h2>
 
-  <input id="userId" placeholder="اكتب ID أو رقم المستخدم">
-  <input id="password" type="password" placeholder="اكتب الرمز">
+  <input id="userId" placeholder="ID المستخدم">
+  <input id="password" type="password" placeholder="الرمز">
 
   <button onclick="login()">دخول</button>
 
@@ -26,11 +25,9 @@
 </div>
 
 <script type="module">
-  // Firebase imports
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
   import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
 
-  // Firebase config (من عندك)
   const firebaseConfig = {
     apiKey: "AIzaSyAKGrxv_GT3T3krYeYY5C-o7VmvLkG-gw0",
     authDomain: "cashapp-405b7.firebaseapp.com",
@@ -45,49 +42,25 @@
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  // دالة تسجيل الدخول
   async function login() {
     const id = document.getElementById("userId").value.trim();
     const pass = document.getElementById("password").value.trim();
-    const resultBox = document.getElementById("result");
+    const result = document.getElementById("result");
 
-    if (!id || !pass) {
-      resultBox.innerHTML = "⚠️ يرجى ملء جميع الحقول";
+    const userRef = ref(db, "users/" + id);
+    const snapshot = await get(userRef);
+
+    if (!snapshot.exists()) {
+      result.innerHTML = "❌ ID غير صحيح";
       return;
     }
 
-    // المسار في الداتابيس: users / ID
-    const userRef = ref(db, "users/" + id);
+    const data = snapshot.val();
 
-    try {
-      const snapshot = await get(userRef);
-
-      if (!snapshot.exists()) {
-        resultBox.innerHTML = "❌ اسم المستخدم أو الرمز غير صحيح";
-        return;
-      }
-
-      const data = snapshot.val();
-
-      // التحقق من الرمز (passwordhash)
-      if (data.passwordhash !== pass) {
-        resultBox.innerHTML = "❌ اسم المستخدم أو الرمز غير صحيح";
-        return;
-      }
-
-      // عرض معلومات المستخدم
-      resultBox.innerHTML = `
-        ✔️ <b>اسم المستخدم:</b> ${data.name}<br>
-        ✔️ <b>ID:</b> ${data.id}<br>
-        ✔️ <b>الرصيد:</b> ${data.money}
-      `;
-
-    } catch (error) {
-      resultBox.innerHTML = "حدث خطأ أثناء الاتصال بالداتابيس";
-      console.error(error);
+    if (data.password !== pass) {
+      result.innerHTML = "❌ الرمز غير صحيح";
+      return;
     }
-  }
-</script>
 
-</body>
-</html>
+    result.innerHTML = `
+      ✔️ <b>اسم:</b> ${da

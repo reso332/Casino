@@ -647,12 +647,14 @@
     </div>
 
     <script type="module">
-        // Import Firebase باستخدام إصدار مستقر (v10.12.2)
+        // ----------------------------------------------------------------------
+        // 1. تصحيح اصدارات Firebase SDK إلى إصدار مستقر (10.12.2)
+        // ----------------------------------------------------------------------
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
         
-        // Firebase configuration
+        // Firebase configuration - نفس الإعدادات التي أعطيتني إياها
         const firebaseConfig = {
             apiKey: "AIzaSyAKGrxv_GT3T3krYeYY5C-o7VmvLkG-gw0",
             authDomain: "cashapp-405b7.firebaseapp.com",
@@ -684,7 +686,7 @@
         let currentLanguage = 'ar';
         let isDarkMode = false;
         
-        // الترجمات
+        // الترجمات (باقي بدون تغيير)
         const translations = {
             ar: {
                 // النصوص العامة
@@ -1064,7 +1066,9 @@
             }
         }
         
-        // تحميل بيانات المستخدم
+        // ----------------------------------------------------------------------
+        // 2. تعديل: تحميل بيانات المستخدم (لقراءة حقل 'money' وحقل 'name')
+        // ----------------------------------------------------------------------
         async function loadUserData(userId) {
             if (!database) {
                 showNotification(getTranslation('db_error'), 'error');
@@ -1079,10 +1083,20 @@
                     currentUserData = snapshot.val();
                     currentUserData.uid = userId;
                     
+                    // تعديل: قراءة 'name' أولاً وإلا نستخدم الإيميل كاسم
+                    const userName = currentUserData.name || currentUserData.email.split('@')[0];
+                    document.getElementById('user-name').textContent = userName;
+                    
+                    // قراءة الإيميل من المصادقة
+                    document.getElementById('user-email').textContent = auth.currentUser.email; 
+                    
+                    // تعديل: قراءة 'money' بدلاً من 'balance'. إذا لم يكن موجوداً، نعتبره 0
+                    const balance = currentUserData.money !== undefined ? currentUserData.money : 0;
+                    
+                    // نخزن الرصيد مؤقتاً في 'balance' ليتوافق مع باقي دوال اللعب
+                    currentUserData.balance = balance; 
+                    
                     // تحديث الواجهة
-                    document.getElementById('user-name').textContent = currentUserData.username || currentUserData.email.split('@')[0];
-                    document.getElementById('user-email').textContent = currentUserData.email;
-                    const balance = currentUserData.balance || 0;
                     document.getElementById('user-balance').textContent = balance;
                     document.getElementById('store-balance').textContent = balance;
                     document.getElementById('dice-balance').textContent = balance;
@@ -1096,8 +1110,15 @@
                     showNotification(getTranslation('login_success'), 'success');
                     
                 } else {
-                    showNotification(getTranslation('user_not_found'), 'error');
-                    await signOut(auth);
+                    // إذا كان المستخدم مسجل في Authentication ولكنه غير موجود في Realtime Database، نقوم بإنشاء سجل له
+                    const initialData = {
+                        name: auth.currentUser.email.split('@')[0],
+                        money: 100, // رصيد ابتدائي
+                        created: new Date().toISOString()
+                    };
+                    await update(userRef, initialData);
+                    // إعادة تحميل البيانات بعد الإنشاء
+                    loadUserData(userId);
                 }
             } catch (error) {
                 console.error('Error loading user data:', error);
@@ -1105,15 +1126,19 @@
             }
         }
         
-        // تحديث الرصيد في Firebase
+        // ----------------------------------------------------------------------
+        // 3. تعديل: تحديث الرصيد (لكتابة حقل 'money' بدلاً من 'balance')
+        // ----------------------------------------------------------------------
         async function updateUserBalance(newBalance) {
             if (!currentUserData || !database) return;
             
             try {
+                // تحديث حقل 'money' في قاعدة البيانات
                 await update(ref(database, 'users/' + currentUserData.uid), {
-                    balance: newBalance
+                    money: newBalance
                 });
                 
+                // تحديث بيانات المستخدم في الذاكرة
                 currentUserData.balance = newBalance;
                 
                 // تحديث العرض في جميع الأقسام
@@ -1128,7 +1153,7 @@
             }
         }
         
-        // عرض قسم معين
+        // عرض قسم معين (باقي بدون تغيير)
         function showSection(sectionId) {
             // إخفاء جميع الأقسام
             const sections = ['login-section', 'main-section', 'store-section', 'dice-game', 'airplane-game'];
@@ -1140,7 +1165,7 @@
             document.getElementById(sectionId).style.display = 'block';
         }
         
-        // عرض قسم تسجيل الدخول
+        // عرض قسم تسجيل الدخول (باقي بدون تغيير)
         function showLoginSection() {
             showSection('login-section');
             currentUserData = null;
@@ -1150,7 +1175,7 @@
             document.getElementById('login-password').value = '';
         }
         
-        // تحميل المنتجات
+        // تحميل المنتجات (باقي بدون تغيير)
         function loadProducts() {
             const products = [
                 { icon: "🥃", name: "whisky", price: 120, desc: currentLanguage === 'ar' ? 'ويسكي اسكتلندي أصلي' : 'Original Scotch whisky' },
@@ -1194,7 +1219,7 @@
             });
         }
         
-        // شراء منتج
+        // شراء منتج (باقي بدون تغيير)
         async function buyProduct(productName, price) {
             if (!currentUserData) return;
             
@@ -1209,7 +1234,7 @@
             showNotification(`${getTranslation('purchase_success')} ${getTranslation(productName)}!`, 'success');
         }
         
-        // لعبة النرد
+        // لعبة النرد (باقي بدون تغيير)
         async function playDice() {
             if (!currentUserData) return;
             
@@ -1272,7 +1297,7 @@
             }, 1000);
         }
         
-        // لعبة الطائرة
+        // لعبة الطائرة (باقي بدون تغيير)
         async function playAirplane() {
             if (!currentUserData) return;
             
